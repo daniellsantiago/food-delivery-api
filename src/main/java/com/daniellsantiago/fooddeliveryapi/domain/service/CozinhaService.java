@@ -2,35 +2,35 @@ package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cozinha;
-import com.daniellsantiago.fooddeliveryapi.domain.repository.CozinhaRepository;
+import com.daniellsantiago.fooddeliveryapi.domain.repository.GenericCrudRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class CozinhaService {
-    private final CozinhaRepository<Cozinha> cozinhaRepository;
+    private final GenericCrudRepository<Cozinha, Long> genericCrudRepository;
 
     public Cozinha save(Cozinha cozinha) {
-        return cozinhaRepository.save(cozinha);
+        return genericCrudRepository.save(cozinha);
     }
 
     public Cozinha update(Cozinha cozinha) {
-        return cozinhaRepository.update(cozinha);
+        return genericCrudRepository.update(cozinha);
     }
 
     public List<Cozinha> findAll() {
-        return cozinhaRepository.findAll();
+        return genericCrudRepository.findAll();
     }
 
     public Cozinha findById(Long id) {
-        return cozinhaRepository.findById(id)
+        return genericCrudRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cozinha com o id " + id + " não encontrada"));
     }
 
     public void delete(Long id) {
-        Cozinha cozinha = cozinhaRepository.findById(id)
+        Cozinha cozinha = genericCrudRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cozinha com o id " + id + " não encontrada"));
-        cozinhaRepository.deleteById(cozinha.getId());
+        genericCrudRepository.deleteById(cozinha.getId());
     }
 }

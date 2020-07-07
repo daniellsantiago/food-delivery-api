@@ -5,10 +5,10 @@ import com.daniellsantiago.fooddeliveryapi.domain.model.Cozinha;
 import java.util.List;
 import java.util.Optional;
 
-public interface CozinhaRepository <T>{
-    T save(T cozinha);
-    T update(T cozinha);
-    void deleteById(Long id);
+public interface GenericCrudRepository<T, ID>{
+    T save(T entity);
+    T update(T entity);
+    void deleteById(ID id);
     List<T> findAll();
-    Optional<T> findById(long id);
+    Optional<T> findById(ID id);
 }
