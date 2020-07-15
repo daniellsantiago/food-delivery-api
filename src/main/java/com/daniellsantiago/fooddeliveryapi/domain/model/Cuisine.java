@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -16,4 +18,7 @@ public class Cuisine {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurant> restaurants = new ArrayList<>();
 }
