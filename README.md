@@ -1,2 +1,2 @@
 # food-delivery-api
-Uma API de entrega de comida relativamente simples, desenvolvida apenas para fins de estudo.
+An Rest Api designed to allow customers to order food online. (Study purposes) 
