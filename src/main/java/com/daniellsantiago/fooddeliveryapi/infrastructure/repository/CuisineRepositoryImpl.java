@@ -2,6 +2,7 @@ package com.daniellsantiago.fooddeliveryapi.infrastructure.repository;
 
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.CuisineRepository;
+import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.jpa.CuisineJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

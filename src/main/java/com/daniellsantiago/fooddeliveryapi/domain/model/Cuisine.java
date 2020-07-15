@@ -19,6 +19,6 @@ public class Cuisine {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "cozinha")
+    @OneToMany(mappedBy = "cuisine")
     private List<Restaurant> restaurants = new ArrayList<>();
 }
