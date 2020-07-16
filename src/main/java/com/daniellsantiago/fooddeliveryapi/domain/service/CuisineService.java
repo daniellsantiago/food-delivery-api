@@ -1,9 +1,12 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
+import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUse;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.CuisineRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,8 +38,12 @@ public class CuisineService {
 
     @Transactional
     public void delete(Long id) {
-        Cuisine cuisine = cuisineRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cuisine with id " + id + " not found"));
-        cuisineRepository.deleteById(cuisine.getId());
+        try {
+            cuisineRepository.deleteById(id);
+        }catch(EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Cuisine with id " + id + " not found");
+        }catch(DataIntegrityViolationException e){
+            throw new EntityInUse("Cuisine with id " + id + " is associated with another Entity");
+        }
     }
 }

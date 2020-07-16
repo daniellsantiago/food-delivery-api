@@ -26,6 +26,8 @@ public class RestaurantService {
     }
 
     public Restaurant update(Restaurant restaurant) {
+        Cuisine cuisine = cuisineService.findById(restaurant.getCuisine().getId());
+        restaurant.setCuisine(cuisine);
         return restaurantRepository.update(restaurant);
     }
 

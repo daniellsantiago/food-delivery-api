@@ -1,9 +1,12 @@
 package com.daniellsantiago.fooddeliveryapi.domain.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 @Data
 @Entity
@@ -21,4 +24,12 @@ public class Restaurant {
     @ManyToOne
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
+
+    @CreationTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private OffsetDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private OffsetDateTime updatedAt;
 }
