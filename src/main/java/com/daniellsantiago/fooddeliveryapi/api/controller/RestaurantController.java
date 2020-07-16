@@ -1,7 +1,9 @@
 package com.daniellsantiago.fooddeliveryapi.api.controller;
 
+import com.daniellsantiago.fooddeliveryapi.api.assembler.RestaurantBasicDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.RestaurantDTOAssembler;
-import com.daniellsantiago.fooddeliveryapi.api.assembler.RestaurantInputDisassembler;
+import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.RestaurantInputDisassembler;
+import com.daniellsantiago.fooddeliveryapi.api.dto.RestaurantBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.RestaurantDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.RestaurantInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
@@ -23,14 +25,16 @@ public class RestaurantController {
 
     private final RestaurantDTOAssembler restaurantDTOAssembler;
 
+    private final RestaurantBasicDTOAssembler restaurantBasicDTOAssembler;
+
     private final RestaurantInputDisassembler restaurantInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<RestaurantDTO>> findAll() {
-        List<RestaurantDTO> restaurantDTOS = restaurantDTOAssembler.toCollectionDTO(restaurantService.findAll());
-        if(restaurantDTOS.isEmpty())
+    public ResponseEntity<List<RestaurantBasicDTO>> findAll() {
+        List<RestaurantBasicDTO> restaurantBasicDTOS = restaurantBasicDTOAssembler.toCollectionDTO(restaurantService.findAll());
+        if(restaurantBasicDTOS.isEmpty())
             return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(restaurantDTOS);
+        return ResponseEntity.ok(restaurantBasicDTOS);
     }
 
     @GetMapping("/{id}")
@@ -52,7 +56,7 @@ public class RestaurantController {
         Restaurant restaurantToBeUpdated = restaurantService.findById(id);
         restaurantInputDisassembler.copyToDomainObject(restaurantInput, restaurantToBeUpdated);
 
-        RestaurantDTO updatedRestaurant = restaurantDTOAssembler.toDTO(restaurantService.update(restaurantToBeUpdated));
+        RestaurantDTO updatedRestaurant = restaurantDTOAssembler.toDTO(restaurantService.save(restaurantToBeUpdated));
         return ResponseEntity.ok(updatedRestaurant);
     }
 }

@@ -6,25 +6,15 @@ import lombok.Setter;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class RestaurantInput {
+public class CityInput {
 
     @NotBlank
     private String name;
 
-    @NotNull
-    @PositiveOrZero
-    private BigDecimal shippingCost;
-
     @Valid
     @NotNull
-    private CuisineIdInput cuisine;
-
-    @Valid
-    @NotNull
-    private AddressInput address;
+    private StateIdInput state;
 }

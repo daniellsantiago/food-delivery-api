@@ -32,4 +32,7 @@ public class Restaurant {
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     private OffsetDateTime updatedAt;
+
+    @Embedded
+    private Address address;
 }

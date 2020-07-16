@@ -22,11 +22,6 @@ public class CuisineService {
         return cuisineRepository.save(cuisine);
     }
 
-    @Transactional
-    public Cuisine update(Cuisine cuisine) {
-        return cuisineRepository.update(cuisine);
-    }
-
     public List<Cuisine> findAll() {
         return cuisineRepository.findAll();
     }

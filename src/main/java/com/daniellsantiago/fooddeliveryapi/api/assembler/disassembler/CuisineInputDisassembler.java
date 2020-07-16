@@ -1,4 +1,4 @@
-package com.daniellsantiago.fooddeliveryapi.api.assembler;
+package com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler;
 
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CuisineInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;

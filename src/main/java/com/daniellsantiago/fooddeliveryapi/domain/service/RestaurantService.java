@@ -1,11 +1,13 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
+import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,21 +16,20 @@ import java.util.List;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final CuisineService cuisineService;
+    private final CityService cityService;
 
+    @Transactional
     public Restaurant save(Restaurant restaurant) {
-        Long cuisine_id = restaurant.getCuisine().getId();
+        Long cuisineId = restaurant.getCuisine().getId();
+        Long cityId = restaurant.getAddress().getCity().getId();
 
-        Cuisine cuisine = cuisineService.findById(cuisine_id);
+        Cuisine cuisine = cuisineService.findById(cuisineId);
+        City city = cityService.findById(cityId);
 
         restaurant.setCuisine(cuisine);
+        restaurant.getAddress().setCity(city);
 
         return restaurantRepository.save(restaurant);
-    }
-
-    public Restaurant update(Restaurant restaurant) {
-        Cuisine cuisine = cuisineService.findById(restaurant.getCuisine().getId());
-        restaurant.setCuisine(cuisine);
-        return restaurantRepository.update(restaurant);
     }
 
     public List<Restaurant> findAll() {

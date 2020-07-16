@@ -3,14 +3,13 @@ package com.daniellsantiago.fooddeliveryapi.api.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
-public class RestaurantDTO {
+public class CityBasicDTO {
+
     private Long id;
+
     private String name;
-    private BigDecimal shippingCost;
-    private CuisineDTO cuisine;
-    private AddressDTO address;
+
+    private StateDTO state;
 }

@@ -21,11 +21,6 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public Restaurant update(Restaurant entity) {
-        return restaurantJpaRepository.save(entity);
-    }
-
-    @Override
     public List<Restaurant> findAll() {
         return restaurantJpaRepository.findAll();
     }

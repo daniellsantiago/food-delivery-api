@@ -21,11 +21,6 @@ public class CuisineRepositoryImpl implements CuisineRepository {
     }
 
     @Override
-    public Cuisine update(Cuisine entity) {
-        return cuisineJpaRepository.save(entity);
-    }
-
-    @Override
     public void deleteById(Long id) {
         cuisineJpaRepository.deleteById(id);
     }

@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface CuisineRepository {
     Cuisine save(Cuisine entity);
-    Cuisine update(Cuisine entity);
     void deleteById(Long id);
     List<Cuisine> findAll();
     Optional<Cuisine> findById(Long id);

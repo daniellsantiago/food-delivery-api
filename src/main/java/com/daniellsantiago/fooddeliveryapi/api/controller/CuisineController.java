@@ -1,7 +1,7 @@
 package com.daniellsantiago.fooddeliveryapi.api.controller;
 
 import com.daniellsantiago.fooddeliveryapi.api.assembler.CuisineDTOAssembler;
-import com.daniellsantiago.fooddeliveryapi.api.assembler.CuisineInputDisassembler;
+import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.CuisineInputDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CuisineInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
@@ -50,7 +50,7 @@ public class CuisineController {
         Cuisine cuisineToBeUpdated = cuisineService.findById(id);
         cuisineInputDisassembler.copyToDomainObject(cuisineInput, cuisineToBeUpdated);
 
-        Cuisine updatedCuisine = cuisineService.update(cuisineToBeUpdated);
+        Cuisine updatedCuisine = cuisineService.save(cuisineToBeUpdated);
 
         return ResponseEntity.ok(cuisineDTOAssembler.toDTO(updatedCuisine));
     }
