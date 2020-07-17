@@ -2,6 +2,7 @@ package com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler;
 
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CityInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
+import com.daniellsantiago.fooddeliveryapi.domain.model.State;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class CityInputDisassembler {
     }
 
     public void copyToDomainObject(CityInput cityInput, City city) {
+        city.setState(new State());
         modelMapper.map(cityInput, city);
     }
 }
