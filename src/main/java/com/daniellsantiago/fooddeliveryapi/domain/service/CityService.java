@@ -11,6 +11,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CityService {
@@ -43,4 +45,9 @@ public class CityService {
         return cityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("City with id " + id + " not found"));
     }
+
+    public List<City> findAll() {
+        return cityRepository.findAll();
+    }
+
 }

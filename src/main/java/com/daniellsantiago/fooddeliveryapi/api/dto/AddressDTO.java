@@ -15,5 +15,5 @@ public class AddressDTO {
 
     private String street;
 
-    private CityBasicDTO city;
+    private CityDTO city;
 }
