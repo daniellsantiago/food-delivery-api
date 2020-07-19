@@ -23,6 +23,7 @@ public class CuisineRepositoryImpl implements CuisineRepository {
     @Override
     public void deleteById(Long id) {
         cuisineJpaRepository.deleteById(id);
+        cuisineJpaRepository.flush();
     }
 
     @Override

@@ -24,6 +24,7 @@ public class CityRepositoryImpl implements CityRepository {
     @Override
     public void deleteById(Long id) {
         cityJpaRepository.deleteById(id);
+        cityJpaRepository.flush();
     }
 
     @Override

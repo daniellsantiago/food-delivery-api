@@ -1,6 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
-import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUse;
+import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.model.State;
@@ -37,7 +37,7 @@ public class CityService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("City with id " + cityId+ " not found");
         } catch (DataIntegrityViolationException e) {
-            throw new EntityInUse("City with id " + cityId + " is associated with another Entity");
+            throw new EntityInUseException("City with id " + cityId + " is associated with another Entity");
         }
     }
 
