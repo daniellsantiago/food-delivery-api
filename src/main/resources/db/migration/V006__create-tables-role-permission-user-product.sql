@@ -1,4 +1,4 @@
-create table `group` (
+create table `role` (
 	id bigint not null auto_increment,
 	name varchar(60) not null,
 
@@ -13,11 +13,11 @@ create table permission (
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
-create table group_permission (
-	group_id bigint not null,
+create table role_permission (
+	role_id bigint not null,
 	permission_id bigint not null,
 
-	primary key (group_id, permission_id)
+	primary key (role_id, permission_id)
 ) engine=InnoDB default charset=utf8;
 
 create table product (
@@ -41,24 +41,24 @@ create table user (
 	primary key (id)
 ) engine=InnoDB default charset=utf8;
 
-create table user_group (
+create table user_role (
 	user_id bigint not null,
-	group_id bigint not null,
+	role_id bigint not null,
 
-	primary key (user_id, group_id)
+	primary key (user_id, role_id)
 ) engine=InnoDB default charset=utf8;
 
-alter table group_permission add constraint fk_permission_group
+alter table role_permission add constraint fk_permission_role
 foreign key (permission_id) references permission (id);
 
-alter table group_permission add constraint fk_group_permission
-foreign key (group_id) references `group` (id);
+alter table role_permission add constraint fk_role_permission
+foreign key (role_id) references `role` (id);
 
 alter table product add constraint fk_restaurant_product
 foreign key (restaurant_id) references restaurant (id);
 
-alter table user_group add constraint fk_group_user
-foreign key (group_id) references `group` (id);
+alter table user_role add constraint fk_role_user
+foreign key (role_id) references `role` (id);
 
-alter table user_group add constraint fk_user_group
+alter table user_role add constraint fk_user_role
 foreign key (user_id) references user (id);

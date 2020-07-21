@@ -1,8 +1,8 @@
 set foreign_key_checks = 0;
 delete from cuisine;
 delete from payment_method;
-delete from `group`;
-delete from group_permission;
+delete from `role`;
+delete from role_permission;
 delete from permission;
 delete from product;
 delete from restaurant;
@@ -10,7 +10,7 @@ delete from restaurant_payment_method;
 delete from city;
 delete from state;
 delete from user;
-delete from user_group;
+delete from user_role;
 
 set foreign_key_checks = 1;
 
@@ -19,7 +19,7 @@ alter table payment_method auto_increment = 1;
 alter table restaurant auto_increment = 1;
 alter table city auto_increment = 1;
 alter table state auto_increment = 1;
-alter table `group` auto_increment = 1;
+alter table `role` auto_increment = 1;
 alter table permission auto_increment = 1;
 alter table product auto_increment = 1;
 alter table user auto_increment = 1;
@@ -98,4 +98,4 @@ insert into product (name, description, price, active, restaurant_id)
 values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
 
 
-insert into `group` (name) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+insert into `role` (name) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
