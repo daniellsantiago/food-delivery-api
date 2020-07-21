@@ -41,7 +41,7 @@ public class CuisineController {
     @PostMapping
     public ResponseEntity<CuisineDTO> save(@RequestBody @Valid CuisineInput cuisineInput) {
         Cuisine cuisineToBeSaved = cuisineInputDisassembler.toDomainObject(cuisineInput);
-        cuisineService.save(cuisineToBeSaved);
+        cuisineToBeSaved = cuisineService.save(cuisineToBeSaved);
         return new ResponseEntity<>(cuisineDTOAssembler.toDTO(cuisineToBeSaved), HttpStatus.CREATED);
     }
 

@@ -62,8 +62,8 @@ public class RestaurantController {
     @PostMapping
     public ResponseEntity<RestaurantDTO> save(@RequestBody @Valid RestaurantInput restaurantInput) {
         Restaurant restaurant = restaurantInputDisassembler.toDomainObject(restaurantInput);
-        Restaurant savedRestaurant = restaurantService.save(restaurant);
-        return new ResponseEntity<>(restaurantDTOAssembler.toDTO(savedRestaurant), HttpStatus.CREATED);
+        restaurant = restaurantService.save(restaurant);
+        return new ResponseEntity<>(restaurantDTOAssembler.toDTO(restaurant), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
