@@ -37,6 +37,22 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantBasicDTOS);
     }
 
+    @GetMapping(params = "active=true")
+    public ResponseEntity<List<RestaurantBasicDTO>> findAllActives() {
+        List<RestaurantBasicDTO> restaurantBasicDTOS = restaurantBasicDTOAssembler.toCollectionDTO(restaurantService.findAllActives());
+        if(restaurantBasicDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(restaurantBasicDTOS);
+    }
+
+    @GetMapping(params = "active=false")
+    public ResponseEntity<List<RestaurantBasicDTO>> findAllInactives() {
+        List<RestaurantBasicDTO> restaurantBasicDTOS = restaurantBasicDTOAssembler.toCollectionDTO(restaurantService.findAllInactives());
+        if(restaurantBasicDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(restaurantBasicDTOS);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantDTO> findById(@PathVariable Long id) {
         RestaurantDTO restaurantDTO = restaurantDTOAssembler.toDTO(restaurantService.findById(id));
@@ -58,5 +74,17 @@ public class RestaurantController {
 
         RestaurantDTO updatedRestaurant = restaurantDTOAssembler.toDTO(restaurantService.save(restaurantToBeUpdated));
         return ResponseEntity.ok(updatedRestaurant);
+    }
+
+    @PutMapping("/{id}/activate")
+    public ResponseEntity<Void> activate(@PathVariable Long id) {
+        restaurantService.activate(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/inactivate")
+    public ResponseEntity<Void> inactivate(@PathVariable Long id) {
+        restaurantService.inactivate(id);
+        return ResponseEntity.noContent().build();
     }
 }

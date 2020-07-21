@@ -27,25 +27,25 @@ insert into city (id, name, state_id) values (4, 'Campinas', 2);
 insert into city (id, name, state_id) values (5, 'Fortaleza', 3);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip, address_number, address_additional_information, address_street)
-values (1, 'Thai Gourmet', 10, 1, utc_timestamp, utc_timestamp, 1, '38400-999', '1000', 'Bairro Centro', 'Rua João Pinheiro');
+address_city_id, address_zip, address_number, address_additional_information, address_street, active)
+values (1, 'Thai Gourmet', 10, 1, utc_timestamp, utc_timestamp, 1, '38400-999', '1000', 'Bairro Centro', 'Rua João Pinheiro', true);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip, address_number, address_street)
-values (2, 'Thai Delivery', 9.50, 1, utc_timestamp, utc_timestamp, 2, '48754-111', '90', 'Rua Murajuba');
+address_city_id, address_zip, address_number, address_street, active)
+values (2, 'Thai Delivery', 9.50, 1, utc_timestamp, utc_timestamp, 2, '48754-111', '90', 'Rua Murajuba', true);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip, address_number, address_street)
-values (3, 'Tuk Tuk Indian Cusine', 15, 2, utc_timestamp, utc_timestamp, 1, '56487-121', '100', 'Rua Augusta');
+address_city_id, address_zip, address_number, address_street, active)
+values (3, 'Tuk Tuk Indian Cusine', 15, 2, utc_timestamp, utc_timestamp, 1, '56487-121', '100', 'Rua Augusta', true);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip, address_number, address_additional_information, address_street)
-values (4, 'Java Steakhouse', 12, 3, utc_timestamp, utc_timestamp, 3, '32323-444', '12', 'Av.Brasil', 'Rua das Rosas');
+address_city_id, address_zip, address_number, address_additional_information, address_street, active)
+values (4, 'Java Steakhouse', 12, 3, utc_timestamp, utc_timestamp, 3, '32323-444', '12', 'Av.Brasil', 'Rua das Rosas', true);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip, address_number)
-values (5, 'Uncle Sam Cafeteria', 11, 4, utc_timestamp, utc_timestamp, 4, '12345-678', '120');
+address_city_id, address_zip, address_number, active)
+values (5, 'Uncle Sam Cafeteria', 11, 4, utc_timestamp, utc_timestamp, 4, '12345-678', '120', false);
 
 insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated_at,
-address_city_id, address_zip)
-values (6, 'Bar da Maria', 6, 4, utc_timestamp, utc_timestamp, 5, '66635-120');
+address_city_id, address_zip, active)
+values (6, 'Bar da Maria', 6, 4, utc_timestamp, utc_timestamp, 5, '66635-120', false);

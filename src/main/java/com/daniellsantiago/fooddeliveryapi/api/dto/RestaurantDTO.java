@@ -13,4 +13,5 @@ public class RestaurantDTO {
     private BigDecimal shippingCost;
     private CuisineDTO cuisine;
     private AddressDTO address;
+    private Boolean active;
 }

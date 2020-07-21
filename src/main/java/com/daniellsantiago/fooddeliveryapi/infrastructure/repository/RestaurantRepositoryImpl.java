@@ -26,6 +26,16 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
+    public List<Restaurant> findAllActives() {
+        return restaurantJpaRepository.findAllByActiveTrue();
+    }
+
+    @Override
+    public List<Restaurant> findAllInactives() {
+        return restaurantJpaRepository.findAllByActiveFalse();
+    }
+
+    @Override
     public Optional<Restaurant> findById(Long id) {
         return restaurantJpaRepository.findById(id);
     }

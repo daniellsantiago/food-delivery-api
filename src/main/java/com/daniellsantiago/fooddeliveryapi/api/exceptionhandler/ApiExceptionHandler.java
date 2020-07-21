@@ -2,7 +2,6 @@ package com.daniellsantiago.fooddeliveryapi.api.exceptionhandler;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;

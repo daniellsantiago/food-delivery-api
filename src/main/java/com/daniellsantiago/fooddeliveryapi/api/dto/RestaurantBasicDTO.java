@@ -1,6 +1,5 @@
 package com.daniellsantiago.fooddeliveryapi.api.dto;
 
-import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +12,5 @@ public class RestaurantBasicDTO {
     private String name;
     private BigDecimal shippingCost;
     private CuisineDTO cuisine;
+    private Boolean active;
 }

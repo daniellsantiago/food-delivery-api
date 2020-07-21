@@ -31,13 +31,35 @@ public class RestaurantService {
 
         return restaurantRepository.save(restaurant);
     }
-
     public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
+    }
+
+
+    public List<Restaurant> findAllActives() {
+        return restaurantRepository.findAllActives();
+    }
+
+    public List<Restaurant> findAllInactives() {
+        return restaurantRepository.findAllInactives();
     }
 
     public Restaurant findById(Long id) {
         return restaurantRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant with id " + id + " not found"));
+    }
+
+    @Transactional
+    public void activate(Long id) {
+        Restaurant restaurant = findById(id);
+
+        restaurant.activate();
+    }
+
+    @Transactional
+    public void inactivate(Long id) {
+        Restaurant restaurant = findById(id);
+
+        restaurant.inactivate();
     }
 }

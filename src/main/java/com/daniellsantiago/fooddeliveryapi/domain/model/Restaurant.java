@@ -35,4 +35,14 @@ public class Restaurant {
 
     @Embedded
     private Address address;
+
+    private Boolean active = Boolean.TRUE;
+
+    public void activate() {
+        setActive(true);
+    }
+
+    public void inactivate() {
+        setActive(false);
+    }
 }
