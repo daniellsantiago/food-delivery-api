@@ -1,10 +1,16 @@
 set foreign_key_checks = 0;
 delete from cuisine;
 delete from payment_method;
+delete from `group`;
+delete from group_permission;
+delete from permission;
+delete from product;
 delete from restaurant;
 delete from restaurant_payment_method;
 delete from city;
 delete from state;
+delete from user;
+delete from user_group;
 
 set foreign_key_checks = 1;
 
@@ -13,6 +19,10 @@ alter table payment_method auto_increment = 1;
 alter table restaurant auto_increment = 1;
 alter table city auto_increment = 1;
 alter table state auto_increment = 1;
+alter table `group` auto_increment = 1;
+alter table permission auto_increment = 1;
+alter table product auto_increment = 1;
+alter table user auto_increment = 1;
 
 insert into cuisine (id, name) values (1, 'Thai');
 insert into cuisine (id, name) values (2, 'Indian');
@@ -53,9 +63,39 @@ insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated
 address_city_id, address_zip, active)
 values (6, 'Bar da Maria', 6, 4, utc_timestamp, utc_timestamp, 5, '66635-120', false);
 
-insert into payment_method (id, name) values (1, 'Credit Card');
-insert into payment_method (id, name) values (2, 'Debit Card');
-insert into payment_method (id, name) values (3, 'Cash');
+insert into payment_method (id, name) values (1, 'Cartão de crédito');
+insert into payment_method (id, name) values (2, 'Cartão de débito');
+insert into payment_method (id, name) values (3, 'Dinheiro');
+
+insert into permission (id, name, description) values (1, 'CONSULTAR_CUISINES', 'Permite consultar cuisines');
+insert into permission (id, name, description) values (2, 'EDITAR_CUISINES', 'Permite editar cuisines');
 
 insert into restaurant_payment_method (restaurant_id, payment_method_id)
 values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Pork with sweet and sour sauce', 'Delicious pork in special sauce', 78.90, 1, 1);
+insert into product (name, description, price, active, restaurant_id)
+values ('Camarão tailandês', '16 camarões grandes ao molho picante', 110, 1, 1);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Salada picante com carne grelhada', 'Salada de folhas com cortes finos de carne bovina grelhada e nosso molho especial de pimenta vermelha', 87.20, 1, 2);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Garlic Naan', 'Pão tradicional indiano com cobertura de alho', 21, 1, 3);
+insert into product (name, description, price, active, restaurant_id)
+values ('Murg Curry', 'Cubos de frango preparados com molho curry e especiarias', 43, 1, 3);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Bife Ancho', 'Corte macio e suculento, com dois dedos de espessura, retirado da parte dianteira do contrafilé', 79, 1, 4);
+insert into product (name, description, price, active, restaurant_id)
+values ('T-Bone', 'Corte muito saboroso, com um osso em formato de T, sendo de um lado o contrafilé e do outro o filé mignon', 89, 1, 4);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Sanduíche X-Tudo', 'Sandubão com muito queijo, hamburger bovino, bacon, ovo, salada e maionese', 19, 1, 5);
+
+insert into product (name, description, price, active, restaurant_id)
+values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
+
+
+insert into `group` (name) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
