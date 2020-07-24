@@ -1,12 +1,13 @@
 package com.daniellsantiago.fooddeliveryapi.api.exceptionhandler;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
-import com.daniellsantiago.fooddeliveryapi.domain.exception.InvalidPasswordException;
+import com.daniellsantiago.fooddeliveryapi.domain.exception.InvalidDataRequestException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<?> handleInvalidPasswordException(InvalidPasswordException ex, WebRequest request) {
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.INVALID_DATA;
+        String detail = ex.getMessage();
+
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
+                .status(status.value())
+                .title(problemType.getTitle())
+                .detail(detail)
+                .userMessage(detail).build();
+
+        return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(InvalidDataRequestException.class)
+    public ResponseEntity<?> handleInvalidPasswordException(InvalidDataRequestException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ProblemType problemType = ProblemType.INVALID_DATA;
         String detail = ex.getMessage();

@@ -34,7 +34,7 @@ create table product (
 create table user (
 	id bigint not null auto_increment,
 	name varchar(80) not null,
-	email varchar(255) not null,
+	email varchar(255) unique not null,
 	password varchar(255) not null,
 	created_at datetime not null,
 
