@@ -24,6 +24,10 @@ public class RestaurantPaymentMethodController {
         Restaurant restaurant = restaurantService.findById(restaurantId);
         List<PaymentMethodDTO> paymentMethodDTOS =
                 paymentMethodDTOAssembler.toCollectionDTO(restaurant.getPaymentMethods());
+
+        if(paymentMethodDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+
         return ResponseEntity.ok(paymentMethodDTOS);
     }
 

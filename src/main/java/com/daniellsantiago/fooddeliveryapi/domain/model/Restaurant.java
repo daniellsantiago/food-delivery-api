@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -43,6 +45,9 @@ public class Restaurant {
                     joinColumns = @JoinColumn(name = "restaurant_id"),
                     inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
     private Set<PaymentMethod> paymentMethods = new HashSet<>();
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Product> products = new ArrayList<>();
 
     private Boolean active = Boolean.TRUE;
 
