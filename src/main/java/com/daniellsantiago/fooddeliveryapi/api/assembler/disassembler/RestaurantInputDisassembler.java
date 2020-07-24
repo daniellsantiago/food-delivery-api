@@ -2,6 +2,7 @@ package com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler;
 
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.RestaurantInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Address;
+import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,9 @@ public class RestaurantInputDisassembler {
         // To avoid org.hibernate.HibernateException: identifier of an instance of
         // domain.model.Cuisine was altered from 1 to 2
         restaurant.setCuisine(new Cuisine());
-        restaurant.setAddress(new Address());
+        if(restaurant.getAddress() != null) {
+            restaurant.getAddress().setCity(new City());
+        }
         modelMapper.map(restaurantInput, restaurant);
     }
 }

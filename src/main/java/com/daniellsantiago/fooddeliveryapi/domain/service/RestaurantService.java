@@ -3,6 +3,7 @@ package com.daniellsantiago.fooddeliveryapi.domain.service;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
+import com.daniellsantiago.fooddeliveryapi.domain.model.PaymentMethod;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final CuisineService cuisineService;
     private final CityService cityService;
+    private final PaymentMethodService paymentMethodService;
 
     @Transactional
     public Restaurant save(Restaurant restaurant) {
@@ -61,5 +63,21 @@ public class RestaurantService {
         Restaurant restaurant = findById(id);
 
         restaurant.inactivate();
+    }
+
+    @Transactional
+    public void associatePaymentMethod(Long restaurantId, Long paymentId) {
+        Restaurant restaurant = findById(restaurantId);
+        PaymentMethod paymentMethod = paymentMethodService.findById(paymentId);
+
+        restaurant.addPaymentMethod(paymentMethod);
+    }
+
+    @Transactional
+    public void disassociatePaymentMethod(Long restaurantId, Long paymentId) {
+        Restaurant restaurant = findById(restaurantId);
+        PaymentMethod paymentMethod = paymentMethodService.findById(paymentId);
+
+        restaurant.removePaymentMethod(paymentMethod);
     }
 }
