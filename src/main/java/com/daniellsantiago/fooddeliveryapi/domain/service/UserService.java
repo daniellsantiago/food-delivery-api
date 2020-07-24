@@ -2,6 +2,7 @@ package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.InvalidDataRequestException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
+import com.daniellsantiago.fooddeliveryapi.domain.model.Role;
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     @Transactional
     public User save(User user) {
@@ -34,6 +36,22 @@ public class UserService {
         }
 
         user.setPassword(newPassword);
+    }
+
+    @Transactional
+    public void associateRole(Long userId, Long roleId) {
+        User user = findById(userId);
+        Role role = roleService.findById(roleId);
+
+        user.addRole(role);
+    }
+
+    @Transactional
+    public void disassociateRole(Long userId, Long roleId) {
+        User user = findById(userId);
+        Role role = roleService.findById(roleId);
+
+        user.removeRole(role);
     }
 
     public List<User> findAll() {
