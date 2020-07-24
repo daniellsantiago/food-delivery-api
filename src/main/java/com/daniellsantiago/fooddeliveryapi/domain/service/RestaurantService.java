@@ -80,4 +80,18 @@ public class RestaurantService {
 
         restaurant.removePaymentMethod(paymentMethod);
     }
+
+    @Transactional
+    public void open(Long id) {
+        Restaurant restaurant = findById(id);
+
+        restaurant.open();
+    }
+
+    @Transactional
+    public void close(Long id) {
+        Restaurant restaurant = findById(id);
+
+        restaurant.close();
+    }
 }

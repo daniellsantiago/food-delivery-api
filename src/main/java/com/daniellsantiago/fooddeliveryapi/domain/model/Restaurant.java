@@ -40,6 +40,10 @@ public class Restaurant {
     @Embedded
     private Address address;
 
+    private Boolean active = Boolean.TRUE;
+
+    private Boolean open = Boolean.TRUE;
+
     @ManyToMany
     @JoinTable(name = "restaurant_payment_method",
                     joinColumns = @JoinColumn(name = "restaurant_id"),
@@ -48,8 +52,6 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();
-
-    private Boolean active = Boolean.TRUE;
 
     public void activate() {
         setActive(true);
@@ -65,5 +67,13 @@ public class Restaurant {
 
     public boolean addPaymentMethod(PaymentMethod paymentMethod) {
         return getPaymentMethods().add(paymentMethod);
+    }
+
+    public void open() {
+        setOpen(true);
+    }
+
+    public void close() {
+        setOpen(false);
     }
 }
