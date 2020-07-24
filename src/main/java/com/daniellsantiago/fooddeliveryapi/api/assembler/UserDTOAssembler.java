@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class UserDTOAssembler {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public List<UserDTO> toCollectionDTO(List<User> users) {
+    public List<UserDTO> toCollectionDTO(Collection<User> users) {
         return users.stream()
                     .map(this::toDTO)
                     .collect(Collectors.toList());

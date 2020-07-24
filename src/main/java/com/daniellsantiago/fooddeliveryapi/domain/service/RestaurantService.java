@@ -1,10 +1,7 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
-import com.daniellsantiago.fooddeliveryapi.domain.model.City;
-import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
-import com.daniellsantiago.fooddeliveryapi.domain.model.PaymentMethod;
-import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
+import com.daniellsantiago.fooddeliveryapi.domain.model.*;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,7 @@ public class RestaurantService {
     private final CuisineService cuisineService;
     private final CityService cityService;
     private final PaymentMethodService paymentMethodService;
+    private final UserService userService;
 
     @Transactional
     public Restaurant save(Restaurant restaurant) {
@@ -94,4 +92,21 @@ public class RestaurantService {
 
         restaurant.close();
     }
+
+    @Transactional
+    public void associateResponsible(Long restaurantId, Long userId) {
+        Restaurant restaurant = findById(restaurantId);
+        User user = userService.findById(userId);
+
+        restaurant.addResponsible(user);
+    }
+
+    @Transactional
+    public void disassociateResponsible(Long restaurantId, Long userId) {
+        Restaurant restaurant = findById(restaurantId);
+        User user = userService.findById(userId);
+
+        restaurant.removeResponsible(user);
+    }
+
 }

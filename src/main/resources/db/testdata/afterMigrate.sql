@@ -11,6 +11,7 @@ delete from city;
 delete from state;
 delete from user;
 delete from user_role;
+delete from restaurant_user_responsible;
 
 set foreign_key_checks = 1;
 
@@ -105,6 +106,9 @@ insert into `user` (id, name, email, password, created_at) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
 (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
 (3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
 
 insert into user_role (user_id, role_id) values (1, 1), (1, 2), (2, 2);
+
+insert into restaurant_user_responsible (restaurant_id, user_id) values (1, 5), (3, 5);
