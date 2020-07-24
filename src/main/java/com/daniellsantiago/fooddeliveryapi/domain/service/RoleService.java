@@ -2,6 +2,7 @@ package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
+import com.daniellsantiago.fooddeliveryapi.domain.model.Permission;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Role;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleService {
     private final RoleRepository roleRepository;
+    private final PermissionService permissionService;
 
+    public List<Role> findAll() {
+        return roleRepository.findAll();
+    }
+
+    public Role findById(Long id) {
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role with id " + id + " not found"));
+    }
 
     @Transactional
     public Role save(Role role) {
@@ -36,13 +46,19 @@ public class RoleService {
         }
     }
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
+    @Transactional
+    public void associatePermission(Long roleId, Long permissionId) {
+        Role role = findById(roleId);
+        Permission permission = permissionService.findById(permissionId);
+
+        role.addPermission(permission);
     }
 
-    public Role findById(Long id) {
-        return roleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("role with id " + id + " not found"));
-    }
+    @Transactional
+    public void disassociatePermission(Long roleId, Long permissionId) {
+        Role role = findById(roleId);
+        Permission permission = permissionService.findById(permissionId);
 
+        role.removePermission(permission);
+    }
 }

@@ -99,6 +99,7 @@ values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6
 
 
 insert into `role` (name) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+insert into role_permission (role_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
 insert into `user` (id, name, email, password, created_at) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
