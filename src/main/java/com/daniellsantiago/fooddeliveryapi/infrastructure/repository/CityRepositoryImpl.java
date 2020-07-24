@@ -1,20 +1,19 @@
 package com.daniellsantiago.fooddeliveryapi.infrastructure.repository;
 
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
-import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.CityRepository;
 import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.jpa.CityJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class CityRepositoryImpl implements CityRepository {
-    @Autowired
-    private CityJpaRepository cityJpaRepository;
 
+    private final CityJpaRepository cityJpaRepository;
 
     @Override
     public City save(City entity) {

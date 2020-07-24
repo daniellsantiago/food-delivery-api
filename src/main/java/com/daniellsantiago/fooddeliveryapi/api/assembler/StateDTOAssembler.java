@@ -2,18 +2,18 @@ package com.daniellsantiago.fooddeliveryapi.api.assembler;
 
 import com.daniellsantiago.fooddeliveryapi.api.dto.StateDTO;
 import com.daniellsantiago.fooddeliveryapi.domain.model.State;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class StateDTOAssembler {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public StateDTO toDTO(State state) {
         return modelMapper.map(state, StateDTO.class);

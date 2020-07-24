@@ -38,12 +38,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
         String detail = ex.getMessage();
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(detail).build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
@@ -54,12 +50,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.INVALID_DATA;
         String detail = ex.getMessage();
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(detail).build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
@@ -70,12 +62,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.INVALID_DATA;
         String detail = ex.getMessage();
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(detail).build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
@@ -86,13 +74,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.ENTITY_IN_USE;
         String detail = ex.getMessage();
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(detail)
-                .build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
 
@@ -106,13 +89,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.INVALID_DATA;
         String details = fieldMessage.toString();
         String userMessage = "One or more fields are invalid. Fill in correctly and try again.";
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(details)
-                .userMessage(userMessage)
-                .build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), userMessage, details).build();
         return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
     }
 
@@ -124,13 +102,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = String.format("Resource %s, that you tried to access, not exists.",
                 ex.getRequestURL());
 
-        ExceptionDetails problem = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(MSG_GENERIC_ERROR)
-                .build();
+        ExceptionDetails problem =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
@@ -155,13 +128,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         + "which is not valid. Enter a value compatible with the type %s.",
                 ex.getName(), ex.getValue(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
 
-        ExceptionDetails problem = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(MSG_GENERIC_ERROR)
-                .build();
+        ExceptionDetails problem =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
@@ -180,13 +148,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.INCOMPREHENSIBLE_MESSAGE;
         String detail = "The request body is invalid. Verify the sintax error.";
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(MSG_GENERIC_ERROR)
-                .build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
     }
@@ -197,13 +160,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.SYSTEM_FAIL;
         String detail = MSG_GENERIC_ERROR;
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-            .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-            .status(status.value())
-            .title(problemType.getTitle())
-            .detail(detail)
-            .userMessage(detail)
-            .build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
@@ -215,13 +173,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = String.format("Property '%s' does not exists. "
                 + "Please, enter a valid property.", path);
 
-        ExceptionDetails problem = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(MSG_GENERIC_ERROR)
-                .build();
+        ExceptionDetails problem =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
@@ -235,13 +188,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         + "which is not valid. Please, enter a value compatible with the type %s.",
                 path, ex.getValue(), ex.getTargetType().getSimpleName());
 
-        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .timestamp(OffsetDateTime.now(ZoneOffset.UTC))
-                .status(status.value())
-                .title(problemType.getTitle())
-                .detail(detail)
-                .userMessage(MSG_GENERIC_ERROR)
-                .build();
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
 
         return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
     }
@@ -265,6 +213,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                     .build();
         }
         return super.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    private ExceptionDetails.ExceptionDetailsBuilder createExceptionDetailsBuilder(int status, String title, String userMessage, String detail) {
+        return ExceptionDetails.builder()
+                        .timestamp(OffsetDateTime.now())
+                        .status(status)
+                        .title(title)
+                        .detail(detail)
+                        .userMessage(userMessage);
     }
 
     private String joinPath(List<Reference> references) {

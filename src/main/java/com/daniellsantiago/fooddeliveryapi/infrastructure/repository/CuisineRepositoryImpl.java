@@ -3,17 +3,17 @@ package com.daniellsantiago.fooddeliveryapi.infrastructure.repository;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.CuisineRepository;
 import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.jpa.CuisineJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class CuisineRepositoryImpl implements CuisineRepository {
 
-    @Autowired
-    private CuisineJpaRepository cuisineJpaRepository;
+    private final CuisineJpaRepository cuisineJpaRepository;
 
     @Override
     public Cuisine save(Cuisine entity) {

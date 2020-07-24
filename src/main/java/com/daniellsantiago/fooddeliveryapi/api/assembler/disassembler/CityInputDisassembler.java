@@ -3,14 +3,15 @@ package com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CityInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.model.State;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CityInputDisassembler {
-    @Autowired
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper;
 
     public City toDomainObject(CityInput cityInput) {
         return modelMapper.map(cityInput, City.class);

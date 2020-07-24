@@ -7,7 +7,6 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.input.PaymentMethodInput;
 import com.daniellsantiago.fooddeliveryapi.domain.model.PaymentMethod;
 import com.daniellsantiago.fooddeliveryapi.domain.service.PaymentMethodService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

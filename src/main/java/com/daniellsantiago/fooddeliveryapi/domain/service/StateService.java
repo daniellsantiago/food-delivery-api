@@ -4,6 +4,7 @@ import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.State;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.StateRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,9 +15,10 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class StateService {
-    @Autowired
-    private StateRepository stateRepository;
+
+    private final StateRepository stateRepository;
 
     @Transactional
     public State save(State state) {
