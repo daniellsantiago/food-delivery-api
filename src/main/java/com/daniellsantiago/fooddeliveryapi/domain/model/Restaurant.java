@@ -83,6 +83,14 @@ public class Restaurant {
         setOpen(false);
     }
 
+    public boolean acceptPaymentMethod(PaymentMethod paymentMethod) {
+        return getPaymentMethods().contains(paymentMethod);
+    }
+
+    public boolean doesNotAcceptPaymentMethod(PaymentMethod paymentMethod) {
+        return !acceptPaymentMethod(paymentMethod);
+    }
+
     public boolean addResponsible(User user) {
         return getResponsibles().add(user);
     }

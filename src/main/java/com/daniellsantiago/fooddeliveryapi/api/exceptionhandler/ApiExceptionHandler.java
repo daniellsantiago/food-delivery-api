@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.api.exceptionhandler;
 
+import com.daniellsantiago.fooddeliveryapi.domain.exception.BussinessRuleException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.InvalidDataRequestException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
@@ -36,6 +37,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
+        String detail = ex.getMessage();
+
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
+
+        return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(BussinessRuleException.class)
+    public ResponseEntity<?> handleBussinessRule(BussinessRuleException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.RULE_VIOLATION;
         String detail = ex.getMessage();
 
         ExceptionDetails exceptionDetails =
