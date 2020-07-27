@@ -1,6 +1,6 @@
 create table `order` (
   id bigint not null auto_increment,
-  subtotal decimal(10,2) not null,
+  sub_total decimal(10,2) not null,
   shipping_rate decimal(10,2) not null,
   total_price decimal(10,2) not null,
 

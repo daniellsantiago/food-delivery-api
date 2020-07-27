@@ -12,6 +12,8 @@ delete from state;
 delete from user;
 delete from user_role;
 delete from restaurant_user_responsible;
+delete from `order`;
+delete from order_item;
 
 set foreign_key_checks = 1;
 
@@ -24,6 +26,8 @@ alter table `role` auto_increment = 1;
 alter table permission auto_increment = 1;
 alter table product auto_increment = 1;
 alter table user auto_increment = 1;
+alter table `order` auto_increment = 1;
+alter table order_item auto_increment = 1;
 
 insert into cuisine (id, name) values (1, 'Thai');
 insert into cuisine (id, name) values (2, 'Indian');
@@ -112,3 +116,25 @@ insert into `user` (id, name, email, password, created_at) values
 insert into user_role (user_id, role_id) values (1, 1), (1, 2), (2, 2);
 
 insert into restaurant_user_responsible (restaurant_id, user_id) values (1, 5), (3, 5);
+
+insert into `order` (id, code, restaurant_id, user_customer_id, payment_method_id, address_city_id, address_zip,
+                        address_number, address_additional_information, address_street, status, created_at, sub_total,
+                        shipping_rate, total_price)
+values (1, 'f9981ca4-5a5e-4da3-af04-933861df3e55', 1, 1, 1, 1, '38400-000', '500', 'Apto 801',
+        'Rua Floriano Peixoto', 'CREATED', utc_timestamp, 298.90, 10, 308.90);
+
+insert into order_item (id, order_id, product_id, quantity, unit_price, total_price, observation)
+values (1, 1, 1, 1, 78.9, 78.9, null);
+
+insert into order_item (id, order_id, product_id, quantity, unit_price, total_price, observation)
+values (2, 1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+
+insert into `order` (id, code, restaurant_id, user_customer_id, payment_method_id, address_city_id, address_zip,
+                        address_number, address_additional_information, address_street, status, created_at, sub_total,
+                        shipping_rate, total_price)
+values (2, 'd178b637-a785-4768-a3cb-aa1ce5a8cdab', 4, 1, 2, 1, '38400-111', '300', 'Casa 2', 'Rua Acre', 'CREATED',
+        utc_timestamp, 79, 0, 79);
+
+insert into order_item (id, order_id, product_id, quantity, unit_price, total_price, observation)
+values (3, 2, 6, 1, 79, 79, 'Ao ponto');

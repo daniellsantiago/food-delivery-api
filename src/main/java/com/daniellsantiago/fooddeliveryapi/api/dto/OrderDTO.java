@@ -20,7 +20,7 @@ public class OrderDTO {
     private OffsetDateTime confirmedAt;
     private OffsetDateTime deliveredAt;
     private OffsetDateTime cancelledAt;
-    private RestaurantBasicDTO restaurant;
+    private RestaurantReallyBasicDTO restaurant;
     private UserDTO customer;
     private PaymentMethodDTO paymentMethod;
     private AddressDTO deliveryAddress;

@@ -16,6 +16,6 @@ public class OrderBasicDTO {
     private BigDecimal totalPrice;
     private String status;
     private OffsetDateTime createdAt;
-    private RestaurantBasicDTO restaurant;
+    private RestaurantReallyBasicDTO restaurant;
     private UserDTO customer;
 }
