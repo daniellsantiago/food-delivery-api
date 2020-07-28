@@ -6,7 +6,6 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.OrderInput
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.OrderInput;
-import com.daniellsantiago.fooddeliveryapi.core.data.PageableTranslator;
 import com.daniellsantiago.fooddeliveryapi.domain.filter.OrderFilter;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
