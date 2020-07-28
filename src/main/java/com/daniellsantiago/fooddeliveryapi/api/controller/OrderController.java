@@ -6,6 +6,7 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.OrderInput
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.OrderInput;
+import com.daniellsantiago.fooddeliveryapi.core.data.PageableTranslator;
 import com.daniellsantiago.fooddeliveryapi.domain.filter.OrderFilter;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
@@ -16,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
@@ -67,4 +68,21 @@ public class OrderController {
         order = issueOrderService.issue(order);
         return new ResponseEntity<>(orderDTOAssembler.toDTO(order), HttpStatus.CREATED);
     }
+
+    //To customize the sort parameters
+//    private Pageable translatePageable(Pageable apiPageable) {
+//        var mapping = Map.of(
+//                "code", "code",
+//                "subTotal", "subTotal",
+//                "shippingRate", "shippingRate",
+//                "totalPrice", "totalPrice",
+//                "createdAt", "createdAt",
+//                "restaurant.name", "restaurant.name",
+//                "restaurant.id", "restaurant.id",
+//                "customer.id", "customer.id",
+//                "customer.name", "customer.name"
+//        );
+//
+//        return PageableTranslator.translate(apiPageable, mapping);
+//    }
 }
