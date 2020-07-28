@@ -6,11 +6,18 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.OrderInput
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.OrderInput;
+import com.daniellsantiago.fooddeliveryapi.domain.filter.OrderFilter;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.OrderRepository;
 import com.daniellsantiago.fooddeliveryapi.domain.service.IssueOrderService;
+import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.spec.OrderSpecs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +37,17 @@ public class OrderController {
     private final OrderInputDisassembler orderInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<OrderBasicDTO>> findAll() {
-        List<Order> orders = orderRepository.findAll();
+    public ResponseEntity<Page<OrderBasicDTO>> findAll(OrderFilter filter,
+                                               @PageableDefault(size = 10)Pageable pageable) {
+        Page<Order> orderPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
 
-        List<OrderBasicDTO> ordersDTO = orderBasicDTOAssembler.toCollectionDTO(orders);
-        if(orders.isEmpty())
-            return ResponseEntity.noContent().build();
+        List<OrderBasicDTO> orderBasicDTOS = orderBasicDTOAssembler.toCollectionDTO(orderPage.getContent());
 
-        return ResponseEntity.ok(ordersDTO);
+        Page<OrderBasicDTO> orderBasicDTOPage = new PageImpl<>(
+                orderBasicDTOS, pageable, orderPage.getTotalElements()
+        );
+
+        return ResponseEntity.ok(orderBasicDTOPage);
     }
 
     @GetMapping("/{code}")

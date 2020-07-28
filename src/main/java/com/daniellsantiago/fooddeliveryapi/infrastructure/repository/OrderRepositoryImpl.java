@@ -4,6 +4,9 @@ import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.OrderRepository;
 import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.jpa.OrderJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,4 +36,15 @@ public class OrderRepositoryImpl implements OrderRepository {
     public List<Order> findAll() {
         return orderJpaRepository.findAll();
     }
+
+    @Override
+    public Page<Order> findAll(Pageable pageable) {
+        return orderJpaRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Order> findAll(Specification<Order> spec, Pageable pageable) {
+        return orderJpaRepository.findAll(spec, pageable);
+    }
+
 }
