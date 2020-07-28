@@ -9,10 +9,13 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -94,17 +97,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers, HttpStatus status,
-                                                                  WebRequest request) {
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        List<String> fieldMessage = fieldErrors.stream()
-                .map((field) -> field.getField() + " " + field.getDefaultMessage()).collect(Collectors.toList());
-        ProblemType problemType = ProblemType.INVALID_DATA;
-        String details = fieldMessage.toString();
-        String userMessage = "One or more fields are invalid. Fill in correctly and try again.";
-        ExceptionDetails exceptionDetails =
-                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), userMessage, details).build();
-        return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
+                                                          HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
     }
 
     @Override
@@ -167,6 +162,24 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
+                                                         WebRequest request) {
+        return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
+    }
+
+    @ExceptionHandler(PropertyReferenceException.class)
+    public ResponseEntity<Object> handlePropertyReferenceException(PropertyReferenceException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.INVALID_PARAMETER;
+        String details = ex.getMessage();
+        ExceptionDetails problem =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), details,
+                        details).build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -204,6 +217,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionDetails exceptionDetails =
                 createExceptionDetailsBuilder(status.value(), problemType.getTitle(), MSG_GENERIC_ERROR, detail).build();
 
+        return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
+    }
+
+    private ResponseEntity<Object> handleValidationInternal(Exception ex, HttpHeaders headers,
+                                                    HttpStatus status, WebRequest request, BindingResult bindingResult) {
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        List<String> fieldMessage = fieldErrors.stream()
+                .map((field) -> field.getField() + " " + field.getDefaultMessage()).collect(Collectors.toList());
+        ProblemType problemType = ProblemType.INVALID_DATA;
+        String details = fieldMessage.toString();
+        String userMessage = "One or more fields are invalid. Fill in correctly and try again.";
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), userMessage, details).build();
         return handleExceptionInternal(ex, exceptionDetails, headers, status, request);
     }
 
