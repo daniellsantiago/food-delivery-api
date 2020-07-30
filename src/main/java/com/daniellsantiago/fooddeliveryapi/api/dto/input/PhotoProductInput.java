@@ -14,8 +14,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class PhotoProductInput {
     @NotNull
-    @FileSize(max = "500KB")
-    @FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+    @FileSize(max = "500KB", message = "The photo must have a maximum size of {max}")
+    @FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE },
+                    message = "The photo type must be {allowed}")
     private MultipartFile file;
 
     @NotBlank

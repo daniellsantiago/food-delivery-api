@@ -224,7 +224,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                                     HttpStatus status, WebRequest request, BindingResult bindingResult) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         List<String> fieldMessage = fieldErrors.stream()
-                .map((field) -> field.getField() + " " + field.getDefaultMessage()).collect(Collectors.toList());
+                .map((field) -> "(" + field.getField() + ") " + field.getDefaultMessage()).collect(Collectors.toList());
         ProblemType problemType = ProblemType.INVALID_DATA;
         String details = fieldMessage.toString();
         String userMessage = "One or more fields are invalid. Fill in correctly and try again.";

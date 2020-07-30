@@ -15,7 +15,9 @@ public class PhotoRepositoryImpl implements PhotoRepository {
 
     @Override
     public PhotoProduct save(PhotoProduct photo) {
-        return photoJpaRepository.save(photo);
+        PhotoProduct photoSaved = photoJpaRepository.save(photo);
+        photoJpaRepository.flush();
+        return photoSaved;
     }
 
     @Override

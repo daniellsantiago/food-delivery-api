@@ -1,4 +1,4 @@
-package com.daniellsantiago.fooddeliveryapi.infrastructure.service;
+package com.daniellsantiago.fooddeliveryapi.infrastructure.service.query;
 
 import com.daniellsantiago.fooddeliveryapi.domain.filter.DailySaleFilter;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
