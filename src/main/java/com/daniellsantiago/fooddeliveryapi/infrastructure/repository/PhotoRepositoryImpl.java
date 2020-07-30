@@ -23,6 +23,7 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     @Override
     public void delete(PhotoProduct photo) {
         photoJpaRepository.delete(photo);
+        photoJpaRepository.flush();
     }
 
     @Override

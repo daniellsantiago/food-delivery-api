@@ -52,4 +52,13 @@ public class PhotoProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Photo not found"));
     }
 
+    @Transactional
+    public void delete(Long restaurantId, Long productId) {
+        PhotoProduct photo = findById(restaurantId, productId);
+
+        photoRepository.delete(photo);
+
+        photoStorageService.remove(photo.getFilename());
+    }
+
 }

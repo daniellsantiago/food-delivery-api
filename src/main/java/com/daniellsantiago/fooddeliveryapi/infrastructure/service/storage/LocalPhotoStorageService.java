@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -14,6 +15,17 @@ public class LocalPhotoStorageService implements PhotoStorageService {
 
     @Value("${food-delivery.storage.local.photo-directory}")
     private Path photoDirectory;
+
+    @Override
+    public InputStream recovery(String filename) {
+        try {
+            Path path = getFilePath(filename);
+
+            return Files.newInputStream(path);
+        } catch (Exception e) {
+            throw new StorageException("Couldn't recovery file.");
+        }
+    }
 
     @Override
     public void storage(NewPhoto newPhoto) {
