@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
+import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.PhotoProduct;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.PhotoRepository;
 import com.daniellsantiago.fooddeliveryapi.domain.service.PhotoStorageService.NewPhoto;
@@ -45,4 +46,10 @@ public class PhotoProductService {
 
         return photo;
     }
+
+    public PhotoProduct findById(Long restaurantId, Long productId) {
+        return photoRepository.findById(restaurantId, productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Photo not found"));
+    }
+
 }

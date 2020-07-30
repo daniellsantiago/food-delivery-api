@@ -9,10 +9,7 @@ import com.daniellsantiago.fooddeliveryapi.domain.service.PhotoProductService;
 import com.daniellsantiago.fooddeliveryapi.domain.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -47,5 +44,13 @@ public class RestaurantProductPhotoController {
         PhotoProduct savedPhoto = photoProductService.save(photo, file.getInputStream());
 
         return photoProductDTOAssembler.toDTO(savedPhoto);
+    }
+
+    @GetMapping
+    public PhotoProductDTO find(@PathVariable Long restaurantId,
+                                   @PathVariable Long productId) {
+        PhotoProduct photo = photoProductService.findById(restaurantId, productId);
+
+        return photoProductDTOAssembler.toDTO(photo);
     }
 }
