@@ -4,7 +4,7 @@ import com.daniellsantiago.fooddeliveryapi.core.email.EmailProperties;
 import com.daniellsantiago.fooddeliveryapi.domain.service.SendEmailService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,15 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Service
-@RequiredArgsConstructor
+//@Service - Using fake email
 public class SmtpSendEmailService implements SendEmailService {
 
-    private final JavaMailSender mailSender;
-    private final EmailProperties emailProperties;
-    private final Configuration freemarkerConfig;
+    @Autowired
+    private  JavaMailSender mailSender;
+    @Autowired
+    private  EmailProperties emailProperties;
+    @Autowired
+    private  Configuration freemarkerConfig;
 
     @Override
     public void send(Message message) {
