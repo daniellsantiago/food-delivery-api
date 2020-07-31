@@ -4,6 +4,7 @@ import com.daniellsantiago.fooddeliveryapi.domain.exception.BussinessRuleExcepti
 import com.daniellsantiago.fooddeliveryapi.domain.exception.EntityInUseException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.InvalidDataRequestException;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
+import com.daniellsantiago.fooddeliveryapi.infrastructure.service.email.EmailException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -45,6 +46,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         ExceptionDetails exceptionDetails =
                 createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
+
+        return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<?> handleEmailException(EmailException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ProblemType problemType = ProblemType.SYSTEM_FAIL;
+        String detail = ex.getMessage();
+
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, ex.getCause().getMessage()).build();
 
         return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
     }
