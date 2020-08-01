@@ -1,8 +1,11 @@
 package com.daniellsantiago.fooddeliveryapi.domain.model;
 
+import com.daniellsantiago.fooddeliveryapi.domain.event.OrderConfirmedEvent;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.BussinessRuleException;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,7 +17,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "`order`")
-public class Order {
+public class Order extends AbstractAggregateRoot<Order> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +67,8 @@ public class Order {
     public void confirm() {
         setStatus(OrderStatus.CONFIRMED);
         setConfirmedAt(OffsetDateTime.now());
+
+        registerEvent(new OrderConfirmedEvent(this));
     }
 
     public void deliver() {

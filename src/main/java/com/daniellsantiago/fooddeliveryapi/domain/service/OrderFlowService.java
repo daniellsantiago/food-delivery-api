@@ -1,13 +1,10 @@
 package com.daniellsantiago.fooddeliveryapi.domain.service;
 
 import com.daniellsantiago.fooddeliveryapi.domain.model.Order;
+import com.daniellsantiago.fooddeliveryapi.domain.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.daniellsantiago.fooddeliveryapi.domain.service.SendEmailService.Message;
-
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -15,19 +12,13 @@ public class OrderFlowService {
 
     private final IssueOrderService issueOrderService;
     private final SendEmailService sendEmail;
+    private final OrderRepository orderRepository;
 
     @Transactional
     public void confirm(String code) {
         Order order = issueOrderService.findByCode(code);
         order.confirm();
-
-        var message = Message.builder()
-                            .subject(order.getRestaurant().getName() + " - Order confirmed")
-                            .body("order-confirmed.html")
-                            .receivers(Set.of("danielfake780@gmail.com"))
-                            .variable("order", order)
-                            .build();
-        sendEmail.send(message);
+        orderRepository.save(order);
     }
 
     @Transactional
