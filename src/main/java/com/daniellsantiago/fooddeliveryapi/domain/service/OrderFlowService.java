@@ -18,6 +18,7 @@ public class OrderFlowService {
     public void confirm(String code) {
         Order order = issueOrderService.findByCode(code);
         order.confirm();
+
         orderRepository.save(order);
     }
 
@@ -25,6 +26,8 @@ public class OrderFlowService {
     public void cancel(String code) {
         Order order = issueOrderService.findByCode(code);
         order.cancel();
+
+        orderRepository.save(order);
     }
 
     @Transactional

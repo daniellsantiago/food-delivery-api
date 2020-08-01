@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.domain.model;
 
+import com.daniellsantiago.fooddeliveryapi.domain.event.OrderCancelledEvent;
 import com.daniellsantiago.fooddeliveryapi.domain.event.OrderConfirmedEvent;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.BussinessRuleException;
 import lombok.Data;
@@ -79,6 +80,8 @@ public class Order extends AbstractAggregateRoot<Order> {
     public void cancel() {
         setStatus(OrderStatus.CANCELLED);
         setCancelledAt(OffsetDateTime.now());
+
+        registerEvent(new OrderCancelledEvent(this));
     }
 
     private void setStatus(OrderStatus newStatus) {
