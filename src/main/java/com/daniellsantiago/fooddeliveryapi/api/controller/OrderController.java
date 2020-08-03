@@ -60,6 +60,7 @@ public class OrderController {
     public ResponseEntity<OrderDTO> add(@RequestBody @Valid OrderInput orderInput) {
         Order order = orderInputDisassembler.toDomainObject(orderInput);
 
+        // TODO catch authenticated user
         order.setCustomer(new User());
         order.getCustomer().setId(1L);
 
