@@ -69,9 +69,9 @@ insert into restaurant (id, name, shipping_cost, cuisine_id, created_at, updated
 address_city_id, address_zip, active, open)
 values (6, 'Bar da Maria', 6, 4, utc_timestamp, utc_timestamp, 5, '66635-120', false, false);
 
-insert into payment_method (id, name) values (1, 'Cartão de crédito');
-insert into payment_method (id, name) values (2, 'Cartão de débito');
-insert into payment_method (id, name) values (3, 'Dinheiro');
+insert into payment_method (id, name, updated_at) values (1, 'Cartão de crédito', utc_timestamp);
+insert into payment_method (id, name, updated_at) values (2, 'Cartão de débito', utc_timestamp);
+insert into payment_method (id, name, updated_at) values (3, 'Dinheiro', utc_timestamp);
 
 insert into permission (id, name, description) values (1, 'CONSULTAR_CUISINES', 'Permite consultar cuisines');
 insert into permission (id, name, description) values (2, 'EDITAR_CUISINES', 'Permite editar cuisines');
