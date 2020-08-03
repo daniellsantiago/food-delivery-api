@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 public class OrderItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
