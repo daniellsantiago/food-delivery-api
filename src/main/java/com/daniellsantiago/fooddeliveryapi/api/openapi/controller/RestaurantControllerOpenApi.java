@@ -40,7 +40,7 @@ public interface RestaurantControllerOpenApi {
     ResponseEntity<RestaurantDTO> save(@ApiParam(name = "body", value = "Represents a new Restaurant", required = true)
                                        RestaurantInput restaurantInput);
 
-    @ApiOperation("Update Restaurant informations given an id")
+    @ApiOperation("Update Restaurant information given an id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Restaurant updated"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)

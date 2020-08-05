@@ -31,7 +31,7 @@ public interface RoleControllerOpenApi {
     ResponseEntity<RoleDTO> save(@ApiParam(name = "body", value = "Represents a new Role", required = true)
                                  RoleInput roleInput);
 
-    @ApiOperation("Update Role informations given an id")
+    @ApiOperation("Update Role information given an id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Role updated"),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)

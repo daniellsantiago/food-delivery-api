@@ -29,7 +29,7 @@ public interface CuisineControllerOpenApi {
     ResponseEntity<CuisineDTO> save(@ApiParam(name = "body", value = "Represents a new Cuisine", required = true)
                                     CuisineInput cuisineInput);
 
-    @ApiOperation("Update Cuisine informations given an id")
+    @ApiOperation("Update Cuisine information given an id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cuisine updated"),
             @ApiResponse(code = 404, message = "Cuisine not found", response = ExceptionDetails.class)

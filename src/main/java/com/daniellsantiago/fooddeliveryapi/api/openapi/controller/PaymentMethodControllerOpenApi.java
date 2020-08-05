@@ -33,7 +33,7 @@ public interface PaymentMethodControllerOpenApi {
     ResponseEntity<PaymentMethodDTO> save(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
                                           PaymentMethodInput paymentMethodInput);
 
-    @ApiOperation("Update Payment Method informations given an id")
+    @ApiOperation("Update Payment Method information given an id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Payment Method updated"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)

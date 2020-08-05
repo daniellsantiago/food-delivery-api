@@ -32,7 +32,7 @@ public interface CityControllerOpenApi {
     ResponseEntity<CityDTO> save(@ApiParam(name = "body", value = "Represents a new City", required = true)
                                  CityInput cityInput);
 
-    @ApiOperation("Update City informations given an id")
+    @ApiOperation("Update City information given an id")
     @ApiResponses({
             @ApiResponse(code = 200, message = "City updated"),
             @ApiResponse(code = 404, message = "City not found", response = ExceptionDetails.class)
