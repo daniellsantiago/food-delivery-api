@@ -4,10 +4,16 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.CuisineDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.CuisineInputDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CuisineInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.CuisineControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.service.CuisineService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +21,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cuisine")
+@RequestMapping(value = "/cuisine", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class CuisineController {
+public class CuisineController implements CuisineControllerOpenApi {
     private final CuisineService cuisineService;
 
     private final CuisineDTOAssembler cuisineDTOAssembler;
@@ -25,11 +31,12 @@ public class CuisineController {
     private final CuisineInputDisassembler cuisineInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<CuisineDTO>> findAll() {
-        List<Cuisine> cuisines = cuisineService.findAll();
-        if(cuisines.isEmpty())
-            return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(cuisineDTOAssembler.toCollectionDTO(cuisines));
+    public Page<CuisineDTO> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Cuisine> cuisinePage = cuisineService.findAll(pageable);
+
+        List<CuisineDTO> cuisineDTOS = cuisineDTOAssembler.toCollectionDTO(cuisinePage.getContent());
+
+        return new PageImpl<>(cuisineDTOS, pageable, cuisinePage.getTotalElements());
     }
 
     @GetMapping("/{id}")
