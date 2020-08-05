@@ -6,10 +6,12 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.Restaurant
 import com.daniellsantiago.fooddeliveryapi.api.dto.RestaurantBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.RestaurantDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.RestaurantInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping(value = "/restaurant", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RestaurantController {
+public class RestaurantController implements RestaurantControllerOpenApi {
 
     private final RestaurantService restaurantService;
 
@@ -82,12 +84,6 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}/inactivate")
-    public ResponseEntity<Void> inactivate(@PathVariable Long id) {
-        restaurantService.inactivate(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @PutMapping("/{id}/opening")
     public ResponseEntity<Void> open(@PathVariable Long id) {
         restaurantService.open(id);
@@ -97,6 +93,12 @@ public class RestaurantController {
     @PutMapping("/{id}/closure")
     public ResponseEntity<Void> close(@PathVariable Long id) {
         restaurantService.close(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/inactivate")
+    public ResponseEntity<Void> inactivate(@PathVariable Long id) {
+        restaurantService.inactivate(id);
         return ResponseEntity.noContent().build();
     }
 }
