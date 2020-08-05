@@ -2,18 +2,20 @@ package com.daniellsantiago.fooddeliveryapi.api.controller;
 
 import com.daniellsantiago.fooddeliveryapi.api.assembler.UserDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.UserDTO;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantUserResponsibleControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/responsible")
+@RequestMapping(value = "/restaurant/{restaurantId}/responsible", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RestaurantUserResponsibleController {
+public class RestaurantUserResponsibleController implements RestaurantUserResponsibleControllerOpenApi {
     private final RestaurantService restaurantService;
 
     private final UserDTOAssembler userDTOAssembler;
