@@ -21,14 +21,14 @@ public interface RoleControllerOpenApi {
             @ApiResponse(code = 400, message = "Invalid Role ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<RoleDTO> findById(@ApiParam(value = "Role ID", example = "1")
+    ResponseEntity<RoleDTO> findById(@ApiParam(value = "Role ID", example = "1", required = true)
                                      Long id);
 
     @ApiOperation("Save a new Role to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Role created"),
     })
-    ResponseEntity<RoleDTO> save(@ApiParam(name = "body", value = "Represents a new Role")
+    ResponseEntity<RoleDTO> save(@ApiParam(name = "body", value = "Represents a new Role", required = true)
                                  RoleInput roleInput);
 
     @ApiOperation("Update Role informations given an id")
@@ -36,9 +36,9 @@ public interface RoleControllerOpenApi {
             @ApiResponse(code = 200, message = "Role updated"),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<RoleDTO> update(@ApiParam(value = "Role ID", example = "1")
+    ResponseEntity<RoleDTO> update(@ApiParam(value = "Role ID", example = "1", required = true)
                                    Long id,
-                                   @ApiParam(name = "body", value = "Represents a new Role")
+                                   @ApiParam(name = "body", value = "Represents a new Role", required = true)
                                    RoleInput roleInput);
 
     @ApiOperation("Delete a Role given an id")
@@ -46,6 +46,6 @@ public interface RoleControllerOpenApi {
             @ApiResponse(code = 204, message = "Role deleted"),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> delete(@ApiParam(value = "Role ID", example = "1")
+    ResponseEntity<Void> delete(@ApiParam(value = "Role ID", example = "1", required = true)
                                 Long id);
 }

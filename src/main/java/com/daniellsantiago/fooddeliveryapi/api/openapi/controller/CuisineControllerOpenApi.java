@@ -19,14 +19,14 @@ public interface CuisineControllerOpenApi {
             @ApiResponse(code = 400, message = "Invalid Cuisine ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Cuisine not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<CuisineDTO> findById(@ApiParam(value = "Cuisine ID", example = "1")
+    ResponseEntity<CuisineDTO> findById(@ApiParam(value = "Cuisine ID", example = "1", required = true)
                                         Long id);
 
     @ApiOperation("Save a new Cuisine to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Cuisine created"),
     })
-    ResponseEntity<CuisineDTO> save(@ApiParam(name = "body", value = "Represents a new Cuisine")
+    ResponseEntity<CuisineDTO> save(@ApiParam(name = "body", value = "Represents a new Cuisine", required = true)
                                     CuisineInput cuisineInput);
 
     @ApiOperation("Update Cuisine informations given an id")
@@ -34,15 +34,15 @@ public interface CuisineControllerOpenApi {
             @ApiResponse(code = 200, message = "Cuisine updated"),
             @ApiResponse(code = 404, message = "Cuisine not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<CuisineDTO> update(@ApiParam(name = "body", value = "Represents a new Cuisine")
+    ResponseEntity<CuisineDTO> update(@ApiParam(name = "body", value = "Represents a new Cuisine", required = true)
                                       CuisineInput cuisineInput,
-                                      @ApiParam(value = "Cuisine ID", example = "1")
+                                      @ApiParam(value = "Cuisine ID", example = "1", required = true)
                                       Long id);
     @ApiOperation("Delete a Cuisine given an id")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Cuisine deleted"),
             @ApiResponse(code = 404, message = "Cuisine not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> delete(@ApiParam(value = "Cuisine ID")
+    ResponseEntity<Void> delete(@ApiParam(value = "Cuisine ID", required = true)
                                 Long id);
 }

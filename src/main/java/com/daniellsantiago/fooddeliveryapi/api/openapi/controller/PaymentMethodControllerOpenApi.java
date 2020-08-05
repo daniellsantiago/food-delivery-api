@@ -23,14 +23,14 @@ public interface PaymentMethodControllerOpenApi {
             @ApiResponse(code = 400, message = "Invalid Payment Method ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<PaymentMethodDTO> findById(@ApiParam(value = "Payment Method ID", example = "1")
+    ResponseEntity<PaymentMethodDTO> findById(@ApiParam(value = "Payment Method ID", example = "1", required = true)
                                               Long id,
                                               ServletWebRequest request);
     @ApiOperation("Save a new Payment Method to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Payment Method created"),
     })
-    ResponseEntity<PaymentMethodDTO> save(@ApiParam(name = "body", value = "Represents a new Payment Method")
+    ResponseEntity<PaymentMethodDTO> save(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
                                           PaymentMethodInput paymentMethodInput);
 
     @ApiOperation("Update Payment Method informations given an id")
@@ -38,9 +38,9 @@ public interface PaymentMethodControllerOpenApi {
             @ApiResponse(code = 200, message = "Payment Method updated"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<PaymentMethodDTO> update(@ApiParam(name = "body", value = "Represents a new Payment Method")
+    ResponseEntity<PaymentMethodDTO> update(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
                                             PaymentMethodInput paymentMethodInput,
-                                            @ApiParam(value = "Payment Method ID", example = "1")
+                                            @ApiParam(value = "Payment Method ID", example = "1", required = true)
                                             Long id);
 
     @ApiOperation("Delete a Payment Method given an id")
@@ -48,6 +48,6 @@ public interface PaymentMethodControllerOpenApi {
             @ApiResponse(code = 204, message = "Payment Method deleted"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> delete(@ApiParam(value = "Payment Method ID", example = "1")
+    ResponseEntity<Void> delete(@ApiParam(value = "Payment Method ID", example = "1", required = true)
                                 Long id);
 }

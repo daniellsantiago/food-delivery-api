@@ -21,13 +21,14 @@ public interface OrderControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 404, message = "Order not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<OrderDTO> findByCode(@ApiParam(value = "Order Code", example = "f9981ca4-5a5e-4da3-af04-933861df3e55")
+    ResponseEntity<OrderDTO> findByCode(@ApiParam(value = "Order Code", example = "f9981ca4-5a5e-4da3-af04-933861df3e55"
+                                                    , required = true)
                                         String code);
 
     @ApiOperation("Save a new Order to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Order created"),
     })
-    ResponseEntity<OrderDTO> add(@ApiParam(name = "body", value = "Represents a new Order")
+    ResponseEntity<OrderDTO> add(@ApiParam(name = "body", value = "Represents a new Order", required = true)
                                  OrderInput orderInput);
 }
