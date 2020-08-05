@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.domain.filter;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,12 +12,16 @@ import java.time.OffsetDateTime;
 @Getter
 public class OrderFilter {
 
+    @ApiModelProperty(value = "Customer ID to filter response")
     private Long customerId;
+    @ApiModelProperty(value = "Restaurant ID to filter response")
     private Long restaurantId;
 
+    @ApiModelProperty(value = "Initial creation date / time to filter response")
     @DateTimeFormat(iso = ISO.DATE_TIME )
     private OffsetDateTime initialCreationDate;
 
+    @ApiModelProperty(value = "End creation date / time to filter response")
     @DateTimeFormat(iso = ISO.DATE_TIME )
     private OffsetDateTime endCreationDate;
 

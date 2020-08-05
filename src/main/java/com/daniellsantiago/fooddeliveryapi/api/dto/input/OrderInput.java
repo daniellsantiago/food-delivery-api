@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.api.dto.input;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@ApiModel("Order Input Model")
 public class OrderInput {
 
     @Valid
