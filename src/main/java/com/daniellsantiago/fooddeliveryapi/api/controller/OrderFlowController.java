@@ -1,7 +1,9 @@
 package com.daniellsantiago.fooddeliveryapi.api.controller;
 
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.OrderFlowControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.service.OrderFlowService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order/{orderCode}")
+@RequestMapping(value = "/order/{orderCode}", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class OrderFlowController {
+public class OrderFlowController implements OrderFlowControllerOpenApi {
     private final OrderFlowService orderFlowService;
 
     @PutMapping("/confirm")
