@@ -4,10 +4,12 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.StateDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.StateInputDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.StateDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.StateInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.StateControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.State;
 import com.daniellsantiago.fooddeliveryapi.domain.service.StateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/state")
+@RequestMapping(value = "/state", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class StateController {
+public class StateController implements StateControllerOpenApi {
 
     private final StateService stateService;
 
