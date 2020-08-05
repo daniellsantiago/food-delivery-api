@@ -4,6 +4,8 @@ import com.daniellsantiago.fooddeliveryapi.domain.model.Cuisine;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.CuisineRepository;
 import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.jpa.CuisineJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,6 +31,11 @@ public class CuisineRepositoryImpl implements CuisineRepository {
     @Override
     public List<Cuisine> findAll() {
         return cuisineJpaRepository.findAll();
+    }
+
+    @Override
+    public Page<Cuisine> findAll(Pageable pageable) {
+        return cuisineJpaRepository.findAll(pageable);
     }
 
     @Override
