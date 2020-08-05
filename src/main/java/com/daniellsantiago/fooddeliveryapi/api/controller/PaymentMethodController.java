@@ -4,11 +4,13 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.PaymentMethodDTOAssembl
 import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.PaymentMethodDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.PaymentMethodDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.PaymentMethodInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.PaymentMethodControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.PaymentMethod;
 import com.daniellsantiago.fooddeliveryapi.domain.service.PaymentMethodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -19,9 +21,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/payment-method")
+@RequestMapping(value = "/payment-method", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class PaymentMethodController {
+public class PaymentMethodController implements PaymentMethodControllerOpenApi {
     private final PaymentMethodService paymentService;
 
     private final PaymentMethodDTOAssembler DTOAssembler;
