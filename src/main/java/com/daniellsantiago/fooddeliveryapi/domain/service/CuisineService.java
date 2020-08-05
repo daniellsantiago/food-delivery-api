@@ -7,6 +7,8 @@ import com.daniellsantiago.fooddeliveryapi.domain.repository.CuisineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,10 @@ public class CuisineService {
 
     public List<Cuisine> findAll() {
         return cuisineRepository.findAll();
+    }
+
+    public Page<Cuisine> findAll(Pageable pageable) {
+        return cuisineRepository.findAll(pageable);
     }
 
     public Cuisine findById(Long id) {
