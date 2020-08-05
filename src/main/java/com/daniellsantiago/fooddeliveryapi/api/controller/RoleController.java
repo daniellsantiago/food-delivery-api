@@ -4,10 +4,12 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.RoleDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.RoleInputDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.RoleDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.RoleInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RoleControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Role;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RoleController {
+public class RoleController implements RoleControllerOpenApi {
 
     private final RoleService roleService;
 
