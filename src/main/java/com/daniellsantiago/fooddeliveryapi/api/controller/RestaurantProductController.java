@@ -4,12 +4,14 @@ import com.daniellsantiago.fooddeliveryapi.api.assembler.ProductDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.disassembler.ProductInputDisassembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.ProductDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.ProductInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantProductControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Product;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.service.ProductService;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/product")
+@RequestMapping(value = "/restaurant/{restaurantId}/product", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RestaurantProductController {
+public class RestaurantProductController implements RestaurantProductControllerOpenApi {
     private final ProductService productService;
 
     private final RestaurantService restaurantService;
@@ -29,13 +31,13 @@ public class RestaurantProductController {
     private final ProductInputDisassembler productInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> findAll(@PathVariable long restaurantId,
-                                                    @RequestParam(required = false) boolean includeInactives){
+    public ResponseEntity<List<ProductDTO>> findAll(@PathVariable Long restaurantId,
+                                                    @RequestParam(required = false) boolean includeInactive){
         Restaurant restaurant = restaurantService.findById(restaurantId);
 
         List<Product> allProducts = null;
 
-        if(includeInactives) {
+        if(includeInactive) {
             allProducts = productService.findAllByRestaurant(restaurant);
         } else {
             allProducts = productService.findActivesByRestaurant(restaurant);
