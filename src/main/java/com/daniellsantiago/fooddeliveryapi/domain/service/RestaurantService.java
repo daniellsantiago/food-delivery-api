@@ -40,8 +40,8 @@ public class RestaurantService {
         return restaurantRepository.findAllActives();
     }
 
-    public List<Restaurant> findAllInactives() {
-        return restaurantRepository.findAllInactives();
+    public List<Restaurant> findAllInactive() {
+        return restaurantRepository.findAllInactive();
     }
 
     public Restaurant findById(Long id) {

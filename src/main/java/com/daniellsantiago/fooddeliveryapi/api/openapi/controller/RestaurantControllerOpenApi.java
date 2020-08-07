@@ -6,7 +6,6 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.input.RestaurantInput;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -23,8 +22,8 @@ public interface RestaurantControllerOpenApi {
     @ApiOperation(value = "Find Actives Restaurants", hidden = true)
     ResponseEntity<List<RestaurantBasicDTO>> findAllActives();
 
-    @ApiOperation(value = "Find Inactives Restaurants", hidden = true)
-    ResponseEntity<List<RestaurantBasicDTO>> findAllInactives();
+    @ApiOperation(value = "Find Inactive Restaurants", hidden = true)
+    ResponseEntity<List<RestaurantBasicDTO>> findAllInactive();
 
     @ApiOperation("Find one Restaurant by ID")
     @ApiResponses({
@@ -52,6 +51,7 @@ public interface RestaurantControllerOpenApi {
 
     @ApiOperation("Activates a restaurant by ID")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Activated Restaurant"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
@@ -60,6 +60,7 @@ public interface RestaurantControllerOpenApi {
 
     @ApiOperation("Inactivates a restaurant by ID")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Inactivated Restaurant"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
@@ -68,6 +69,7 @@ public interface RestaurantControllerOpenApi {
 
     @ApiOperation("Open a restaurant by ID")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Restaurant has been opened"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
@@ -76,6 +78,7 @@ public interface RestaurantControllerOpenApi {
 
     @ApiOperation("Close a restaurant by ID")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Restaurant has been closed"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })

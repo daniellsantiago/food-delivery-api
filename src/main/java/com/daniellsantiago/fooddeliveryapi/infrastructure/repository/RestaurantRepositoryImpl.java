@@ -31,7 +31,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public List<Restaurant> findAllInactives() {
+    public List<Restaurant> findAllInactive() {
         return restaurantJpaRepository.findAllByActiveFalse();
     }
 

@@ -9,6 +9,6 @@ public interface RestaurantRepository {
     Restaurant save(Restaurant entity);
     List<Restaurant> findAll();
     List<Restaurant> findAllActives();
-    List<Restaurant> findAllInactives();
+    List<Restaurant> findAllInactive();
     Optional<Restaurant> findById(Long id);
 }

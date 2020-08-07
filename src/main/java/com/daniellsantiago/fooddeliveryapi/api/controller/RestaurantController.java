@@ -48,8 +48,8 @@ public class RestaurantController implements RestaurantControllerOpenApi {
     }
 
     @GetMapping(params = "active=false")
-    public ResponseEntity<List<RestaurantBasicDTO>> findAllInactives() {
-        List<RestaurantBasicDTO> restaurantBasicDTOS = restaurantBasicDTOAssembler.toCollectionDTO(restaurantService.findAllInactives());
+    public ResponseEntity<List<RestaurantBasicDTO>> findAllInactive() {
+        List<RestaurantBasicDTO> restaurantBasicDTOS = restaurantBasicDTOAssembler.toCollectionDTO(restaurantService.findAllInactive());
         if(restaurantBasicDTOS.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(restaurantBasicDTOS);
