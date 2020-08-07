@@ -12,6 +12,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
 
     @ApiOperation("Find all Users responsible to Restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "No Users responsible to Restaurant found",
                     response = ExceptionDetails.class)
@@ -21,6 +22,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
 
     @ApiOperation("Associate user to be responsible to the restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant or User ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant or User not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Successfully associated",
                     response = ExceptionDetails.class)
@@ -31,6 +33,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
                                    Long userId);
     @ApiOperation("Disassociate user to be responsible to the restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant or User ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant or User not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Successfully disassociated",
                     response = ExceptionDetails.class)

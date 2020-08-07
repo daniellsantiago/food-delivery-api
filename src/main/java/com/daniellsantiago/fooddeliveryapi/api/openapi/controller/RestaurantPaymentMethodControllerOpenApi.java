@@ -12,6 +12,7 @@ public interface RestaurantPaymentMethodControllerOpenApi {
 
     @ApiOperation("Find all Payment Methods associated with a Restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "No Payment Method associated with Restaurant found",
                         response = ExceptionDetails.class)
@@ -21,6 +22,7 @@ public interface RestaurantPaymentMethodControllerOpenApi {
 
     @ApiOperation("Associate Payment Method to Restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant or Payment Method ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant or Payment Method not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Successfully associated",
                     response = ExceptionDetails.class)
@@ -32,6 +34,7 @@ public interface RestaurantPaymentMethodControllerOpenApi {
 
     @ApiOperation("Disassociate Payment Method to Restaurant")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Restaurant or Payment Method ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant or Payment Method not found", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Successfully disassociated",
                     response = ExceptionDetails.class)

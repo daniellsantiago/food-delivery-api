@@ -43,6 +43,7 @@ public interface StateControllerOpenApi {
 
     @ApiOperation("Delete a State given an id")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid State ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "State deleted"),
             @ApiResponse(code = 404, message = "State not found", response = ExceptionDetails.class)
     })

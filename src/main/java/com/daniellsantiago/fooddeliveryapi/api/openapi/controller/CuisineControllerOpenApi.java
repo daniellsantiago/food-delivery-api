@@ -40,6 +40,7 @@ public interface CuisineControllerOpenApi {
                                       Long id);
     @ApiOperation("Delete a Cuisine given an id")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Cuisine ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Cuisine deleted"),
             @ApiResponse(code = 404, message = "Cuisine not found", response = ExceptionDetails.class)
     })

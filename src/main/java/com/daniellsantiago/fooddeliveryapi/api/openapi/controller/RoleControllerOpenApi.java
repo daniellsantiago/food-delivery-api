@@ -43,6 +43,7 @@ public interface RoleControllerOpenApi {
 
     @ApiOperation("Delete a Role given an id")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Role ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Role deleted"),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)
     })

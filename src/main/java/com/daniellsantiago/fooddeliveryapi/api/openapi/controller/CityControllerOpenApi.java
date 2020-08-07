@@ -44,6 +44,7 @@ public interface CityControllerOpenApi {
 
     @ApiOperation("Delete a City given an id")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid City ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "City deleted"),
             @ApiResponse(code = 404, message = "City not found", response = ExceptionDetails.class)
     })

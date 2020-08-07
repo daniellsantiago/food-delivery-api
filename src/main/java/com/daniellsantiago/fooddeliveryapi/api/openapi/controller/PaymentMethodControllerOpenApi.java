@@ -45,6 +45,7 @@ public interface PaymentMethodControllerOpenApi {
 
     @ApiOperation("Delete a Payment Method given an id")
     @ApiResponses({
+            @ApiResponse(code = 400, message = "Invalid Payment Method ID", response = ExceptionDetails.class),
             @ApiResponse(code = 204, message = "Payment Method deleted"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
