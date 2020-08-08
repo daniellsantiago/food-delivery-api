@@ -2,18 +2,20 @@ package com.daniellsantiago.fooddeliveryapi.api.controller;
 
 import com.daniellsantiago.fooddeliveryapi.api.assembler.PermissionDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.PermissionDTO;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RolePermissionControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Role;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/role/{roleId}/permission")
+@RequestMapping(value = "/role/{roleId}/permission", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RolePermissionController {
+public class RolePermissionController implements RolePermissionControllerOpenApi {
 
     private final RoleService roleService;
 
