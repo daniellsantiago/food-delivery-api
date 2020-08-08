@@ -6,10 +6,12 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.UserDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.PasswordInput;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.UserInput;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.UserWithPasswordInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.UserControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
 import com.daniellsantiago.fooddeliveryapi.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserControllerOpenApi {
 
     private final UserService userService;
 
