@@ -14,8 +14,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class),
-            @ApiResponse(code = 204, message = "No Users responsible to Restaurant found",
-                    response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No Users responsible to Restaurant found")
     })
     ResponseEntity<List<UserDTO>> findAll(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                           Long restaurantId);

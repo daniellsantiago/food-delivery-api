@@ -13,7 +13,7 @@ public interface CityControllerOpenApi {
 
     @ApiOperation("Find all Cities")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No City registered", response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No City registered")
     })
     ResponseEntity<List<CityDTO>> findAll();
 

@@ -12,7 +12,7 @@ public interface RoleControllerOpenApi {
 
     @ApiOperation("Find all Roles")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No Roles registered", response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No Roles registered")
     })
     ResponseEntity<List<RoleDTO>> findAll();
 

@@ -15,7 +15,7 @@ public interface RestaurantControllerOpenApi {
     @ApiImplicitParam(value = "Filter Restaurants by active property", name = "active", paramType = "query",
                       type = "string", allowableValues = "true, false")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No Restaurant registered", response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No Restaurant registered")
     })
     ResponseEntity<List<RestaurantBasicDTO>> findAll();
 

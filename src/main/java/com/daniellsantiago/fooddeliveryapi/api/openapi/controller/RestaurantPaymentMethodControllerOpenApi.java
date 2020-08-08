@@ -14,8 +14,7 @@ public interface RestaurantPaymentMethodControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class),
-            @ApiResponse(code = 204, message = "No Payment Method associated with Restaurant found",
-                        response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No Payment Method associated with Restaurant found")
     })
     ResponseEntity<List<PaymentMethodDTO>> findAll(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                                    Long restaurantId);

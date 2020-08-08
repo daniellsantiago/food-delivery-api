@@ -12,7 +12,7 @@ public interface StateControllerOpenApi {
 
     @ApiOperation("Find all States")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No State registered", response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No State registered")
     })
     ResponseEntity<List<StateDTO>> findAll();
 

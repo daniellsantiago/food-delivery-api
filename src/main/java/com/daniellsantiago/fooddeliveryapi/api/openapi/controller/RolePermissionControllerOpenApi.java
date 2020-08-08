@@ -12,7 +12,7 @@ public interface RolePermissionControllerOpenApi {
 
     @ApiOperation("Find all permissions associated with a Role")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No Roles registered", response = ExceptionDetails.class),
+            @ApiResponse(code = 204, message = "No Roles registered"),
             @ApiResponse(code = 404, message = "Role not found", response = ExceptionDetails.class)
     })
     ResponseEntity<List<PermissionDTO>> findAll(@ApiParam(value = "Role ID", example = "1", required = true)

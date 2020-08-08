@@ -14,7 +14,7 @@ public interface PaymentMethodControllerOpenApi {
 
     @ApiOperation("Find all Payment Methods")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "No Payment Method registered", response = ExceptionDetails.class)
+            @ApiResponse(code = 204, message = "No Payment Method registered")
     })
     ResponseEntity<List<PaymentMethodDTO>> findAll(ServletWebRequest request);
 
