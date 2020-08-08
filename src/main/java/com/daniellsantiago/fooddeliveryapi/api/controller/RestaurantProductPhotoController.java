@@ -3,6 +3,7 @@ package com.daniellsantiago.fooddeliveryapi.api.controller;
 import com.daniellsantiago.fooddeliveryapi.api.assembler.PhotoProductDTOAssembler;
 import com.daniellsantiago.fooddeliveryapi.api.dto.PhotoProductDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.PhotoProductInput;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantProductPhotoControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.ResourceNotFoundException;
 import com.daniellsantiago.fooddeliveryapi.domain.model.PhotoProduct;
 import com.daniellsantiago.fooddeliveryapi.domain.model.Product;
@@ -24,9 +25,9 @@ import java.io.InputStream;
 import java.util.List;
 
 @RestController
-@RequestMapping("/restaurant/{restaurantId}/product/{productId}/photo")
+@RequestMapping(value = "/restaurant/{restaurantId}/product/{productId}/photo", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class RestaurantProductPhotoController {
+public class RestaurantProductPhotoController implements RestaurantProductPhotoControllerOpenApi {
 
     private final ProductService productService;
 
@@ -38,11 +39,11 @@ public class RestaurantProductPhotoController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public PhotoProductDTO updatePhoto(@PathVariable Long restaurantId,
-                                       @PathVariable Long productId, @Valid PhotoProductInput photoProductInput)
-                                                                                                throws IOException {
+                                       @PathVariable Long productId, @Valid PhotoProductInput photoProductInput,
+                                       @RequestPart(required = true) MultipartFile file) throws IOException {
         Product product = productService.findById(restaurantId, productId);
 
-        MultipartFile file = photoProductInput.getFile();
+        //MultipartFile file = photoProductInput.getFile();
 
         PhotoProduct photo = new PhotoProduct();
         photo.setProduct(product);
@@ -56,7 +57,7 @@ public class RestaurantProductPhotoController {
         return photoProductDTOAssembler.toDTO(savedPhoto);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public PhotoProductDTO findOne(@PathVariable Long restaurantId,
                                    @PathVariable Long productId) {
         PhotoProduct photo = photoProductService.findById(restaurantId, productId);
@@ -64,11 +65,10 @@ public class RestaurantProductPhotoController {
         return photoProductDTOAssembler.toDTO(photo);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.ALL_VALUE)
     public ResponseEntity<InputStreamResource> sendPhoto(@PathVariable Long restaurantId,
                                                           @PathVariable Long productId,
-                                                         @RequestHeader(name = "accept") String acceptHeader)
-                                                                    throws HttpMediaTypeNotAcceptableException{
+                                                         @RequestHeader(name = "accept") String acceptHeader) {
         try {
             PhotoProduct photo = photoProductService.findById(restaurantId, productId);
 
@@ -82,7 +82,7 @@ public class RestaurantProductPhotoController {
             return ResponseEntity.ok()
                     .contentType(mediaType)
                     .body(new InputStreamResource(inputStream));
-        } catch (ResourceNotFoundException e) {
+        } catch (ResourceNotFoundException | HttpMediaTypeNotAcceptableException e) {
             return ResponseEntity.notFound().build();
         }
     }
