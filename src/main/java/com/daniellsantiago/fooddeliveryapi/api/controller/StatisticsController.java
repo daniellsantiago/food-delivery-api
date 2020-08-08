@@ -1,5 +1,6 @@
 package com.daniellsantiago.fooddeliveryapi.api.controller;
 
+import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.StatisticsControllerOpenApi;
 import com.daniellsantiago.fooddeliveryapi.domain.filter.DailySaleFilter;
 import com.daniellsantiago.fooddeliveryapi.domain.model.dto.DailySale;
 import com.daniellsantiago.fooddeliveryapi.domain.service.SalesQueryService;
@@ -13,8 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/statistic")
-
-public class StatisticsController {
+public class StatisticsController implements StatisticsControllerOpenApi {
 
     @Autowired
     private SalesQueryService salesQueryService;
