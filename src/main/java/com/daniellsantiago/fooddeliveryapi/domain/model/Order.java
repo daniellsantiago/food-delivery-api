@@ -4,7 +4,6 @@ import com.daniellsantiago.fooddeliveryapi.domain.event.OrderCancelledEvent;
 import com.daniellsantiago.fooddeliveryapi.domain.event.OrderConfirmedEvent;
 import com.daniellsantiago.fooddeliveryapi.domain.exception.BussinessRuleException;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
@@ -82,6 +81,19 @@ public class Order extends AbstractAggregateRoot<Order> {
         setCancelledAt(OffsetDateTime.now());
 
         registerEvent(new OrderCancelledEvent(this));
+    }
+
+
+    public boolean canBeConfirmed() {
+        return !getStatus().cantChangeTo(OrderStatus.CONFIRMED);
+    }
+
+    public boolean canBeDelivered() {
+        return !getStatus().cantChangeTo(OrderStatus.DELIVERED);
+    }
+
+    public boolean canBeCancelled() {
+        return !getStatus().cantChangeTo(OrderStatus.CANCELLED);
     }
 
     private void setStatus(OrderStatus newStatus) {
