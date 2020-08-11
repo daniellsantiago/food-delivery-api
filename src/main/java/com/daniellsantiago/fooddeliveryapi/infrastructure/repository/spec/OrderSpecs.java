@@ -15,24 +15,24 @@ public class OrderSpecs {
                 root.fetch("restaurant").fetch("cuisine");
                 root.fetch("customer");
             }
-            var precidates = new ArrayList<Predicate>();
+            var predicates = new ArrayList<Predicate>();
 
             if(filter.getCustomerId() != null) {
-                precidates.add(builder.equal(root.get("customer"), filter.getCustomerId()));
+                predicates.add(builder.equal(root.get("customer"), filter.getCustomerId()));
             }
 
             if(filter.getRestaurantId() != null) {
-                precidates.add(builder.equal(root.get("restaurant"), filter.getRestaurantId()));
+                predicates.add(builder.equal(root.get("restaurant"), filter.getRestaurantId()));
             }
 
             if(filter.getInitialCreationDate() != null) {
-                precidates.add(builder.greaterThanOrEqualTo(root.get("createdAt"), filter.getInitialCreationDate()));
+                predicates.add(builder.greaterThanOrEqualTo(root.get("createdAt"), filter.getInitialCreationDate()));
             }
 
             if(filter.getEndCreationDate() != null) {
-                precidates.add(builder.lessThanOrEqualTo(root.get("createdAt"), filter.getEndCreationDate()));
+                predicates.add(builder.lessThanOrEqualTo(root.get("createdAt"), filter.getEndCreationDate()));
             }
-            return builder.and(precidates.toArray(new Predicate[0]));
+            return builder.and(predicates.toArray(new Predicate[0]));
         };
     }
 }
