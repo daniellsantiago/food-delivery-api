@@ -15,16 +15,16 @@ import com.daniellsantiago.fooddeliveryapi.domain.service.IssueOrderService;
 import com.daniellsantiago.fooddeliveryapi.infrastructure.repository.spec.OrderSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,24 +36,20 @@ public class OrderController implements OrderControllerOpenApi {
     private final OrderDTOAssembler orderDTOAssembler;
     private final OrderBasicDTOAssembler orderBasicDTOAssembler;
     private final OrderInputDisassembler orderInputDisassembler;
+    private final PagedResourcesAssembler<Order> pagedResourcesAssembler;
 
     @GetMapping
-    public Page<OrderBasicDTO> findAll(OrderFilter filter,
+    public PagedModel<OrderBasicDTO> findAll(OrderFilter filter,
                                                @PageableDefault(size = 10)Pageable pageable) {
         Page<Order> orderPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
-
-        List<OrderBasicDTO> orderBasicDTOS = orderBasicDTOAssembler.toCollectionDTO(orderPage.getContent());
-
-        return new PageImpl<>(
-                orderBasicDTOS, pageable, orderPage.getTotalElements()
-        );
+        return pagedResourcesAssembler.toModel(orderPage, orderBasicDTOAssembler);
     }
 
     @GetMapping("/{code}")
     public ResponseEntity<OrderDTO> findByCode(@PathVariable String code) {
         Order order = issueOrderService.findByCode(code);
 
-        return ResponseEntity.ok(orderDTOAssembler.toDTO(order));
+        return ResponseEntity.ok(orderDTOAssembler.toModel(order));
     }
 
     @PostMapping
@@ -65,7 +61,7 @@ public class OrderController implements OrderControllerOpenApi {
         order.getCustomer().setId(1L);
 
         order = issueOrderService.issue(order);
-        return new ResponseEntity<>(orderDTOAssembler.toDTO(order), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderDTOAssembler.toModel(order), HttpStatus.CREATED);
     }
 
     //To customize the sort parameters

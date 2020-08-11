@@ -6,16 +6,16 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.input.OrderInput;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
 import com.daniellsantiago.fooddeliveryapi.domain.filter.OrderFilter;
 import io.swagger.annotations.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Orders")
 public interface OrderControllerOpenApi {
 
     @ApiOperation("Find all Orders")
-    Page<OrderBasicDTO> findAll(OrderFilter filter,
-                                Pageable pageable);
+    PagedModel<OrderBasicDTO> findAll(OrderFilter filter,
+                                      Pageable pageable);
 
     @ApiOperation("Find one Order by code")
     @ApiResponses({
