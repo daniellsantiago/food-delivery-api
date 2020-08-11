@@ -4,15 +4,15 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CuisineInput;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
 import io.swagger.annotations.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Cuisines")
 public interface CuisineControllerOpenApi {
 
     @ApiOperation("Find all Cuisines with pagination")
-    Page<CuisineDTO> findAll(Pageable pageable);
+    PagedModel<CuisineDTO> findAll(Pageable pageable);
 
     @ApiOperation("Find one Cuisine by id")
     @ApiResponses({
