@@ -4,18 +4,14 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.CityDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.input.CityInput;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
 import io.swagger.annotations.*;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 @Api(tags = "Cities")
 public interface CityControllerOpenApi {
 
     @ApiOperation("Find all Cities")
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "No City registered")
-    })
-    ResponseEntity<List<CityDTO>> findAll();
+    CollectionModel<CityDTO> findAll();
 
     @ApiOperation("Find one City by id")
     @ApiResponses({

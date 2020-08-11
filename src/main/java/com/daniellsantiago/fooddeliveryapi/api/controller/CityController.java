@@ -8,6 +8,7 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.CityController
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.service.CityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +26,17 @@ public class CityController implements CityControllerOpenApi {
     private final CityInputDisassembler cityInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<CityDTO>> findAll() {
+    public CollectionModel<CityDTO> findAll() {
         List<City> cities = cityService.findAll();
-        if(cities.isEmpty())
-            return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(cityDTOAssembler.toCollectionDTO(cities));
+
+        return cityDTOAssembler.toCollectionModel(cities);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CityDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(cityDTOAssembler.toDTO(cityService.findById(id)));
+        City city = cityService.findById(id);
+
+        return ResponseEntity.ok(cityDTOAssembler.toModel(city));
     }
 
     @PostMapping
@@ -43,7 +45,9 @@ public class CityController implements CityControllerOpenApi {
 
         city = cityService.save(city);
 
-        return new ResponseEntity<>(cityDTOAssembler.toDTO(city), HttpStatus.CREATED);
+        CityDTO cityDTO = cityDTOAssembler.toModel(city);
+
+        return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -53,7 +57,7 @@ public class CityController implements CityControllerOpenApi {
 
         cityInputDisassembler.copyToDomainObject(cityInput, cityToBeUpdated);
 
-        CityDTO updatedCity = cityDTOAssembler.toDTO(cityService.save(cityToBeUpdated));
+        CityDTO updatedCity = cityDTOAssembler.toModel(cityService.save(cityToBeUpdated));
 
         return ResponseEntity.ok(updatedCity);
     }
