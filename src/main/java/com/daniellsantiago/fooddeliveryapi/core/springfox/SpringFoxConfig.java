@@ -1,19 +1,25 @@
 package com.daniellsantiago.fooddeliveryapi.core.springfox;
 
+import com.daniellsantiago.fooddeliveryapi.api.dto.CityDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
-import com.daniellsantiago.fooddeliveryapi.api.openapi.model.CuisinesModelOpenApi;
-import com.daniellsantiago.fooddeliveryapi.api.openapi.model.OrderBasicModelOpenApi;
-import com.daniellsantiago.fooddeliveryapi.api.openapi.model.PageableModelOpenApi;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.model.*;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Links;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.client.LinkDiscoverer;
+import org.springframework.hateoas.client.LinkDiscoverers;
+import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.http.HttpStatus;
+import org.springframework.plugin.core.SimplePluginRegistry;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -35,6 +41,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLStreamHandler;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
