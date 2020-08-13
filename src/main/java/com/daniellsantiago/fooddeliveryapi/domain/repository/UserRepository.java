@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface UserRepository {
     User save(User entity);
     Optional<User> findById(Long id);
+    Optional<User> findByEmail(String email);
     List<User> findAll();
 }
