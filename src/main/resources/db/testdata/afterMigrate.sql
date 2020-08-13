@@ -73,8 +73,9 @@ insert into payment_method (id, name, updated_at) values (1, 'Cartão de crédit
 insert into payment_method (id, name, updated_at) values (2, 'Cartão de débito', utc_timestamp);
 insert into payment_method (id, name, updated_at) values (3, 'Dinheiro', utc_timestamp);
 
-insert into permission (id, name, description) values (1, 'CONSULTAR_CUISINES', 'Permite consultar cuisines');
-insert into permission (id, name, description) values (2, 'EDITAR_CUISINES', 'Permite editar cuisines');
+insert into permission (id, name, description) values (1, 'CUSTOMER_GENERIC', 'Customer generic actions');
+insert into permission (id, name, description) values (2, 'ADMIN_GENERIC', 'Admin generic actions');
+insert into permission (id, name, description) values (3, 'MANAGER_GENERIC', 'Manager generic actions');
 
 insert into restaurant_payment_method (restaurant_id, payment_method_id)
 values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
@@ -104,17 +105,17 @@ insert into product (name, description, price, active, restaurant_id)
 values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
 
 
-insert into `role` (name) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
-insert into role_permission (role_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+insert into `role` (name) values ('Manager'), ('Customer'), ('Admin');
+insert into role_permission (role_id, permission_id) values (1, 3), (1, 1), (2, 1), (3, 1), (3, 2), (3, 3);
 
 insert into `user` (id, name, email, password, created_at) values
-(1, 'João da Silva', 'joao.ger@hotmail.com', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'maria.vnd@hotmail.com', '123', utc_timestamp),
-(3, 'José Souza', 'jose.aux@hotmail.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@hotmail.com', '123', utc_timestamp),
-(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
+(1, 'João da Silva', 'joao.ger@hotmail.com', '$2a$10$X.FZy8zlGnPBQ0EOPUdbEuNCcQoc4j9kvjKpLt/qkXocjB6aAvUbG', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@hotmail.com', '$2a$10$X.FZy8zlGnPBQ0EOPUdbEuNCcQoc4j9kvjKpLt/qkXocjB6aAvUbG', utc_timestamp),
+(3, 'José Souza', 'jose.aux@hotmail.com', '$2a$10$X.FZy8zlGnPBQ0EOPUdbEuNCcQoc4j9kvjKpLt/qkXocjB6aAvUbG', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@hotmail.com', '$2a$10$X.FZy8zlGnPBQ0EOPUdbEuNCcQoc4j9kvjKpLt/qkXocjB6aAvUbG', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$10$X.FZy8zlGnPBQ0EOPUdbEuNCcQoc4j9kvjKpLt/qkXocjB6aAvUbG', utc_timestamp);
 
-insert into user_role (user_id, role_id) values (1, 1), (1, 2), (2, 2);
+insert into user_role (user_id, role_id) values (1, 1), (2, 2), (3, 2), (4, 2), (5, 3);
 
 insert into restaurant_user_responsible (restaurant_id, user_id) values (1, 5), (3, 5);
 
