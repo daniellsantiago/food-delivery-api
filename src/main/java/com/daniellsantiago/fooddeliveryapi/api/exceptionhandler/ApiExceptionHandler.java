@@ -28,6 +28,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import java.time.OffsetDateTime;
+import org.springframework.security.access.AccessDeniedException;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +44,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemType problemType = ProblemType.RESOURCE_NOT_FOUND;
         String detail = ex.getMessage();
+
+        ExceptionDetails exceptionDetails =
+                createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
+
+        return handleExceptionInternal(ex, exceptionDetails, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        ProblemType problemType = ProblemType.RULE_VIOLATION;
+        String detail = "Access denied for this User";
 
         ExceptionDetails exceptionDetails =
                 createExceptionDetailsBuilder(status.value(), problemType.getTitle(), detail, detail).build();
