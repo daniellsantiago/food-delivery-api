@@ -7,6 +7,7 @@ import com.daniellsantiago.fooddeliveryapi.domain.model.User;
 import com.daniellsantiago.fooddeliveryapi.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +18,13 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User save(User user) {
         try {
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
             return userRepository.save(user);
         } catch(DataIntegrityViolationException ex) {
             throw new InvalidDataRequestException("Email already in use");
@@ -31,11 +35,11 @@ public class UserService {
     public void changePassword(Long id, String oldPassword, String newPassword) {
         User user = findById(id);
 
-        if(user.passwordNotEquals(oldPassword)) {
+        if(!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new InvalidDataRequestException("Incorrect Password");
         }
 
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
     }
 
     @Transactional
