@@ -5,7 +5,7 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     image: food-delivery-api
-    container_name: api_food_delivery
+    container_name: food-delivery-api
     ports:
       - '8080:8080'
       - '5005:5005'
@@ -19,7 +19,7 @@ services:
     container_name: db_food_delivery
     environment:
       - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=food_delivery_api
+      - MYSQL_DATABASE=db_food_delivery
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=root
     ports:
