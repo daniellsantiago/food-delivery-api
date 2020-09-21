@@ -77,16 +77,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                         .ignoredParameterTypes(ServletWebRequest.class, URL.class, URI.class, URLStreamHandler.class,
                                                 Resource.class, File.class, InputStream.class)
                         .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
-                        .directModelSubstitute(Links.class, LinksModelOpenApi.class)
                         .alternateTypeRules(AlternateTypeRules.newRule(
-                                        typeResolver.resolve(PagedModel.class, CuisineDTO.class),
+                                        typeResolver.resolve(Page.class, CuisineDTO.class),
                                         CuisinesModelOpenApi.class))
                         .alternateTypeRules(AlternateTypeRules.newRule(
-                                        typeResolver.resolve(PagedModel.class, OrderBasicDTO.class),
+                                        typeResolver.resolve(Page.class, OrderBasicDTO.class),
                                         OrderBasicModelOpenApi.class))
-                        .alternateTypeRules(AlternateTypeRules.newRule(
-                                        typeResolver.resolve(CollectionModel.class, CityDTO.class),
-                                        CityModelOpenApi.class))
                         .apiInfo(apiInfo())
                         .tags(new Tag("Cities", "Manage Cities"),
                               new Tag("Roles", "Manage User Roles"),
@@ -97,7 +93,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                               new Tag("Products", "Manage the Products from Restaurants"),
                               new Tag("Users", "Manage Users"),
                               new Tag("Statistics", "Business metrics"),
-                              new Tag("Cuisines", "Manage Cuisines"));
+                              new Tag("Cuisines", "Manage Cuisines"),
+                              new Tag("Login", "Authenticate User"));
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("apiKey", "Authorization", "header");
     }
 
     @Override
@@ -112,7 +113,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Food Delivery API")
-                .description("An Api to help restaurants to delivery food to customers")
+                .description("An Api to help restaurants to delivery food to customers. Obs: Before any request, make sure you're logged in!")
                 .version("1")
                 .contact(new Contact("Daniel", "https://github.com/daniellsantiago",
                                      "danielsantiago111@hotmail.com"))
