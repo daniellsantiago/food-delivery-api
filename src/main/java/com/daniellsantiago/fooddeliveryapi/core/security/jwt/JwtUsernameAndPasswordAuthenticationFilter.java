@@ -3,12 +3,12 @@ package com.daniellsantiago.fooddeliveryapi.core.security.jwt;
 import com.daniellsantiago.fooddeliveryapi.core.security.auth.AuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
@@ -18,12 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@RequiredArgsConstructor
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationFailureHandler authenticationFailureHandler,
+                                                      AuthenticationManager authenticationManager,
+                                                      JwtConfig jwtConfig,
+                                                      SecretKey secretKey) {
+        this.authenticationManager = authenticationManager;
+        this.jwtConfig = jwtConfig;
+        this.secretKey = secretKey;
+        setFilterProcessesUrl("/api/v1/login");
+        setAuthenticationFailureHandler(authenticationFailureHandler);
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
