@@ -50,15 +50,14 @@ public class RestaurantProductController implements RestaurantProductControllerO
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDTO> findProductById(@PathVariable Long restaurantId,
+    public ProductDTO findProductById(@PathVariable Long restaurantId,
                                                       @PathVariable Long productId) {
-        Product product = productService.findById(restaurantId, productId);
-
-        return ResponseEntity.ok(productDTOAssembler.toDTO(product));
+        return productDTOAssembler.toDTO(productService.findById(restaurantId, productId));
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> save(@PathVariable Long restaurantId,
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDTO save(@PathVariable Long restaurantId,
                                            @RequestBody @Valid ProductInput productInput) {
 
         Restaurant restaurant = restaurantService.findById(restaurantId);
@@ -66,20 +65,16 @@ public class RestaurantProductController implements RestaurantProductControllerO
         Product product = productInputDisassembler.toDomainObject(productInput);
         product.setRestaurant(restaurant);
 
-        product = productService.save(product);
-
-        return new ResponseEntity<>(productDTOAssembler.toDTO(product), HttpStatus.CREATED);
+        return productDTOAssembler.toDTO(productService.save(product));
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long restaurantId, @PathVariable Long productId,
+    public ProductDTO update(@PathVariable Long restaurantId, @PathVariable Long productId,
                                   @RequestBody @Valid ProductInput productInput) {
         Product product = productService.findById(restaurantId, productId);
 
         productInputDisassembler.copyToDomainObject(productInput, product);
 
-        product = productService.save(product);
-
-        return ResponseEntity.ok(productDTOAssembler.toDTO(product));
+        return productDTOAssembler.toDTO(productService.save(product));
     }
 }

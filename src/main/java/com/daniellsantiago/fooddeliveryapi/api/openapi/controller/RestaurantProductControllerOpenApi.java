@@ -27,7 +27,7 @@ public interface RestaurantProductControllerOpenApi {
             @ApiResponse(code = 400, message = "Invalid Restaurant or Product ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant or Product not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<ProductDTO> findProductById(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    ProductDTO findProductById(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                                Long restaurantId,
                                                @ApiParam(value = "Product ID", example = "1", required = true)
                                                Long productId);
@@ -37,7 +37,7 @@ public interface RestaurantProductControllerOpenApi {
             @ApiResponse(code = 201, message = "Product created"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<ProductDTO> save(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    ProductDTO save(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                     Long restaurantId,
                                     @ApiParam(name = "body", value = "Represents a new Product", required = true)
                                     ProductInput productInput);
@@ -47,7 +47,7 @@ public interface RestaurantProductControllerOpenApi {
             @ApiResponse(code = 200, message = "Product updated"),
             @ApiResponse(code = 404, message = "Product from Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<ProductDTO> update(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    ProductDTO update(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                       Long restaurantId,
                                       @ApiParam(value = "Product ID", example = "1", required = true)
                                       Long productId,
