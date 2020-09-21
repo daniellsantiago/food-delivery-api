@@ -26,7 +26,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
             @ApiResponse(code = 204, message = "Successfully associated",
                     response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> associate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void associate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                    Long restaurantId,
                                    @ApiParam(value = "User ID", example = "1", required = true)
                                    Long userId);
@@ -37,7 +37,7 @@ public interface RestaurantUserResponsibleControllerOpenApi {
             @ApiResponse(code = 204, message = "Successfully disassociated",
                     response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> disassociate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void disassociate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                               Long restaurantId,
                                       @ApiParam(value = "User ID", example = "1", required = true)
                                               Long userId);

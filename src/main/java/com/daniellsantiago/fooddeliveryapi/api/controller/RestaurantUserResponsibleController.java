@@ -6,6 +6,7 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantUser
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +33,15 @@ public class RestaurantUserResponsibleController implements RestaurantUserRespon
         return ResponseEntity.ok(userDTOS);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> associate(@PathVariable Long restaurantId, @PathVariable Long userId) {
-        restaurantService.associateResponsible(restaurantId, userId);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disassociate(@PathVariable Long restaurantId, @PathVariable Long userId) {
+        restaurantService.disassociateResponsible(restaurantId, userId);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> disassociate(@PathVariable Long restaurantId, @PathVariable Long userId) {
-        restaurantService.disassociateResponsible(restaurantId, userId);
-        return ResponseEntity.noContent().build();
+    @PutMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associate(@PathVariable Long restaurantId, @PathVariable Long userId) {
+        restaurantService.associateResponsible(restaurantId, userId);
     }
 }
