@@ -8,11 +8,8 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.CityController
 import com.daniellsantiago.fooddeliveryapi.domain.model.City;
 import com.daniellsantiago.fooddeliveryapi.domain.service.CityService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,47 +23,45 @@ public class CityController implements CityControllerOpenApi {
     private final CityDTOAssembler cityDTOAssembler;
     private final CityInputDisassembler cityInputDisassembler;
 
-    @PreAuthorize("hasAuthority('CUSTOMER_GENERIC')")
     @GetMapping
-    public CollectionModel<CityDTO> findAll() {
+    public List<CityDTO> findAll() {
         List<City> cities = cityService.findAll();
 
-        return cityDTOAssembler.toCollectionModel(cities);
+        return cityDTOAssembler.toCollectionDTO(cities);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityDTO> findById(@PathVariable Long id) {
+    public CityDTO findById(@PathVariable Long id) {
         City city = cityService.findById(id);
 
-        return ResponseEntity.ok(cityDTOAssembler.toModel(city));
+        return cityDTOAssembler.toDTO(city);
     }
 
     @PostMapping
-    public ResponseEntity<CityDTO> save(@RequestBody @Valid CityInput cityInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CityDTO save(@RequestBody @Valid CityInput cityInput) {
         City city = cityInputDisassembler.toDomainObject(cityInput);
 
         city = cityService.save(city);
 
-        CityDTO cityDTO = cityDTOAssembler.toModel(city);
+        CityDTO cityDTO = cityDTOAssembler.toDTO(city);
 
-        return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
+        return cityDTO;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CityDTO> update(@RequestBody @Valid CityInput cityInput,
+    public CityDTO update(@RequestBody @Valid CityInput cityInput,
                                           @PathVariable Long id) {
         City cityToBeUpdated = cityService.findById(id);
 
         cityInputDisassembler.copyToDomainObject(cityInput, cityToBeUpdated);
 
-        CityDTO updatedCity = cityDTOAssembler.toModel(cityService.save(cityToBeUpdated));
-
-        return ResponseEntity.ok(updatedCity);
+        return cityDTOAssembler.toDTO(cityService.save(cityToBeUpdated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
         cityService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
