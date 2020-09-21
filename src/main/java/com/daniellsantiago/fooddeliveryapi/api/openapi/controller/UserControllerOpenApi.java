@@ -7,6 +7,7 @@ import com.daniellsantiago.fooddeliveryapi.api.dto.input.UserWithPasswordInput;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 @Api(tags = "Users")
@@ -22,14 +23,14 @@ public interface UserControllerOpenApi {
             @ApiResponse(code = 404, message = "User not found", response = ExceptionDetails.class),
             @ApiResponse(code = 400, message = "Invalid User ID", response = ExceptionDetails.class)
     })
-    ResponseEntity<UserDTO> findById(@ApiParam(value = "User ID", example = "1", required = true)
+    UserDTO findById(@ApiParam(value = "User ID", example = "1", required = true)
                                      Long id);
 
     @ApiOperation("Save a new User to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "User created"),
     })
-    ResponseEntity<UserDTO> save(@ApiParam(name = "body", value = "Represents a new User", required = true)
+    UserDTO save(@ApiParam(name = "body", value = "Represents a new User", required = true)
                                  UserWithPasswordInput userWithPasswordInput);
 
     @ApiOperation("Update User information given an id")
@@ -37,7 +38,7 @@ public interface UserControllerOpenApi {
             @ApiResponse(code = 200, message = "User updated"),
             @ApiResponse(code = 404, message = "User not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<UserDTO> update(@ApiParam(value = "User ID", example = "1", required = true)
+    UserDTO update(@ApiParam(value = "User ID", example = "1", required = true)
                                    Long id,
                                    @ApiParam(name = "body", value = "Represents a new User", required = true)
                                    UserInput userInput);
@@ -47,7 +48,7 @@ public interface UserControllerOpenApi {
             @ApiResponse(code = 204, message = "Successfully changed the Password"),
             @ApiResponse(code = 404, message = "User not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> changePassword(@ApiParam(value = "User ID", example = "1", required = true)
+    void changePassword(@ApiParam(value = "User ID", example = "1", required = true)
                                         Long id,
                                         @ApiParam(name = "body", value = "Password fields", required = true)
                                         PasswordInput password);

@@ -38,33 +38,30 @@ public class UserController implements UserControllerOpenApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
-
-        return ResponseEntity.ok(userDTOAssembler.toDTO(user));
+    public UserDTO findById(@PathVariable Long id) {
+        return userDTOAssembler.toDTO(userService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> save(@RequestBody @Valid UserWithPasswordInput userWithPasswordInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO save(@RequestBody @Valid UserWithPasswordInput userWithPasswordInput) {
         User user = userInputDisassembler.toDomainObject(userWithPasswordInput);
-        user = userService.save(user);
 
-        return new ResponseEntity<>(userDTOAssembler.toDTO(user), HttpStatus.CREATED);
+        return userDTOAssembler.toDTO(userService.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id,
+    public UserDTO update(@PathVariable Long id,
                                   @RequestBody @Valid UserInput userInput) {
         User userToBeUpdated = userService.findById(id);
         userInputDisassembler.copyToDomainObject(userInput, userToBeUpdated);
-        userToBeUpdated = userService.save(userToBeUpdated);
 
-        return ResponseEntity.ok(userDTOAssembler.toDTO(userToBeUpdated));
+        return userDTOAssembler.toDTO(userService.save(userToBeUpdated));
     }
 
     @PutMapping("/{id}/password")
-    public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody @Valid PasswordInput password) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(@PathVariable Long id, @RequestBody @Valid PasswordInput password) {
         userService.changePassword(id, password.getOldPassword(), password.getNewPassword());
-        return ResponseEntity.noContent().build();
     }
 }
