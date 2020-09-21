@@ -1,38 +1,33 @@
 package com.daniellsantiago.fooddeliveryapi.core.springfox;
 
-import com.daniellsantiago.fooddeliveryapi.api.dto.CityDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.CuisineDTO;
 import com.daniellsantiago.fooddeliveryapi.api.dto.OrderBasicDTO;
 import com.daniellsantiago.fooddeliveryapi.api.exceptionhandler.ExceptionDetails;
-import com.daniellsantiago.fooddeliveryapi.api.openapi.model.*;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.model.CuisinesModelOpenApi;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.model.OrderBasicModelOpenApi;
+import com.daniellsantiago.fooddeliveryapi.api.openapi.model.PageableModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Links;
-import org.springframework.hateoas.PagedModel;
-import org.springframework.hateoas.client.LinkDiscoverer;
-import org.springframework.hateoas.client.LinkDiscoverers;
-import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.http.HttpStatus;
-import org.springframework.plugin.core.SimplePluginRegistry;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.*;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.ResponseMessage;
-import springfox.documentation.service.Tag;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -41,32 +36,38 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLStreamHandler;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static io.swagger.models.auth.In.HEADER;
+import static java.util.Collections.singletonList;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Configuration
 @EnableSwagger2
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SpringFoxConfig implements WebMvcConfigurer {
 
-    @Primary
-    @Bean
-    public LinkDiscoverers discoverers() {
-        List<LinkDiscoverer> plugins = new ArrayList<>();
-        plugins.add(new CollectionJsonLinkDiscoverer());
-        return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
-    }
-
     @Bean
     public Docket apiDocket() {
         var typeResolver = new TypeResolver();
 
         return new Docket(DocumentationType.SWAGGER_2)
+                        .securitySchemes(singletonList(new ApiKey("JWT", AUTHORIZATION, HEADER.name())))
+                        .securityContexts(singletonList(
+                                SecurityContext.builder()
+                                        .securityReferences(
+                                                singletonList(SecurityReference.builder()
+                                                        .reference("JWT")
+                                                        .scopes(new AuthorizationScope[0])
+                                                        .build()))
+                                        .build()
+                                )
+                        )
                         .select()
-                            .apis(RequestHandlerSelectors.basePackage("com.daniellsantiago.fooddeliveryapi.api"))
-                            .paths(PathSelectors.any())
-                            .build()
+                        .apis(RequestHandlerSelectors.basePackage("com.daniellsantiago.fooddeliveryapi.api"))
+                        .paths(PathSelectors.any())
+                        .build()
                         .useDefaultResponseMessages(false)
                         .globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())
                         .globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
