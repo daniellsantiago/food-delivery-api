@@ -17,11 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,7 +33,6 @@ public class OrderController implements OrderControllerOpenApi {
     private final OrderDTOAssembler orderDTOAssembler;
     private final OrderBasicDTOAssembler orderBasicDTOAssembler;
     private final OrderInputDisassembler orderInputDisassembler;
-    private final PagedResourcesAssembler<Order> pagedResourcesAssembler;
 
     @GetMapping
     public PagedModel<OrderBasicDTO> findAll(OrderFilter filter,
@@ -46,14 +42,15 @@ public class OrderController implements OrderControllerOpenApi {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<OrderDTO> findByCode(@PathVariable String code) {
+    public OrderDTO findByCode(@PathVariable String code) {
         Order order = issueOrderService.findByCode(code);
 
-        return ResponseEntity.ok(orderDTOAssembler.toModel(order));
+        return orderDTOAssembler.toDTO(order);
     }
 
     @PostMapping
-    public ResponseEntity<OrderDTO> add(@RequestBody @Valid OrderInput orderInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDTO add(@RequestBody @Valid OrderInput orderInput) {
         Order order = orderInputDisassembler.toDomainObject(orderInput);
 
         // TODO catch authenticated user
@@ -61,7 +58,7 @@ public class OrderController implements OrderControllerOpenApi {
         order.getCustomer().setId(1L);
 
         order = issueOrderService.issue(order);
-        return new ResponseEntity<>(orderDTOAssembler.toModel(order), HttpStatus.CREATED);
+        return orderDTOAssembler.toDTO(order);
     }
 
     //To customize the sort parameters
