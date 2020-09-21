@@ -36,35 +36,30 @@ public class StateController implements StateControllerOpenApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StateDTO> findById(@PathVariable Long id) {
-        StateDTO state = stateDTOAssembler.toDTO(stateService.findById(id));
-
-        return ResponseEntity.ok(state);
+    public StateDTO findById(@PathVariable Long id) {
+        return stateDTOAssembler.toDTO(stateService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<StateDTO> save(@RequestBody @Valid StateInput stateInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public StateDTO save(@RequestBody @Valid StateInput stateInput) {
         State state = stateInputDisassembler.toDomainObject(stateInput);
 
-        state = stateService.save(state);
-
-        return new ResponseEntity<>(stateDTOAssembler.toDTO(state), HttpStatus.CREATED);
+        return stateDTOAssembler.toDTO(stateService.save(state));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StateDTO> update(@PathVariable Long id, @RequestBody @Valid StateInput stateInput) {
+    public StateDTO update(@PathVariable Long id, @RequestBody @Valid StateInput stateInput) {
         State stateToBeUpdated = stateService.findById(id);
 
         stateInputDisassembler.copyToDomainObject(stateInput, stateToBeUpdated);
 
-        StateDTO stateDTO = stateDTOAssembler.toDTO(stateService.save(stateToBeUpdated));
-
-        return ResponseEntity.ok(stateDTO);
+        return stateDTOAssembler.toDTO(stateService.save(stateToBeUpdated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
         stateService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
