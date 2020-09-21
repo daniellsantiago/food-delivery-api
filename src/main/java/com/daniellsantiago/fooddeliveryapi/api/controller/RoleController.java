@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/roles", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RoleController implements RoleControllerOpenApi {
 
@@ -36,36 +36,31 @@ public class RoleController implements RoleControllerOpenApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDTO> findById(@PathVariable Long id) {
-        Role role = roleService.findById(id);
-
-        return ResponseEntity.ok(roleDTOAssembler.toDTO(role));
+    public RoleDTO findById(@PathVariable Long id) {
+        return roleDTOAssembler.toDTO(roleService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<RoleDTO> save(@RequestBody @Valid RoleInput roleInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public RoleDTO save(@RequestBody @Valid RoleInput roleInput) {
         Role role = roleInputDisassembler.toDomainObject(roleInput);
 
-        role = roleService.save(role);
-
-        return new ResponseEntity<>(roleDTOAssembler.toDTO(role), HttpStatus.CREATED);
+        return roleDTOAssembler.toDTO(roleService.save(role));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDTO> update(@PathVariable Long id,
+    public RoleDTO update(@PathVariable Long id,
                                           @RequestBody @Valid RoleInput roleInput) {
         Role roleToBeUpdated = roleService.findById(id);
 
         roleInputDisassembler.copyToDomainObject(roleInput, roleToBeUpdated);
 
-        roleToBeUpdated = roleService.save(roleToBeUpdated);
-
-        return ResponseEntity.ok(roleDTOAssembler.toDTO(roleToBeUpdated));
+        return roleDTOAssembler.toDTO(roleService.save(roleToBeUpdated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
         roleService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
