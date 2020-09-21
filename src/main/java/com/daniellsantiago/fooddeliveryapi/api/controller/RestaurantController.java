@@ -56,49 +56,48 @@ public class RestaurantController implements RestaurantControllerOpenApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantDTO> findById(@PathVariable Long id) {
-        RestaurantDTO restaurantDTO = restaurantDTOAssembler.toDTO(restaurantService.findById(id));
-        return  ResponseEntity.ok(restaurantDTO);
+    public RestaurantDTO findById(@PathVariable Long id) {
+        return  restaurantDTOAssembler.toDTO(restaurantService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<RestaurantDTO> save(@RequestBody @Valid RestaurantInput restaurantInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestaurantDTO save(@RequestBody @Valid RestaurantInput restaurantInput) {
         Restaurant restaurant = restaurantInputDisassembler.toDomainObject(restaurantInput);
         restaurant = restaurantService.save(restaurant);
-        return new ResponseEntity<>(restaurantDTOAssembler.toDTO(restaurant), HttpStatus.CREATED);
+        return restaurantDTOAssembler.toDTO(restaurant);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RestaurantDTO> update(@PathVariable Long id,
+    public RestaurantDTO update(@PathVariable Long id,
                                                 @RequestBody @Valid RestaurantInput restaurantInput){
         Restaurant restaurantToBeUpdated = restaurantService.findById(id);
         restaurantInputDisassembler.copyToDomainObject(restaurantInput, restaurantToBeUpdated);
 
-        RestaurantDTO updatedRestaurant = restaurantDTOAssembler.toDTO(restaurantService.save(restaurantToBeUpdated));
-        return ResponseEntity.ok(updatedRestaurant);
+        return restaurantDTOAssembler.toDTO(restaurantService.save(restaurantToBeUpdated));
     }
 
     @PutMapping("/{id}/activate")
-    public ResponseEntity<Void> activate(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void activate(@PathVariable Long id) {
         restaurantService.activate(id);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/opening")
-    public ResponseEntity<Void> open(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void open(@PathVariable Long id) {
         restaurantService.open(id);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/closure")
-    public ResponseEntity<Void> close(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void close(@PathVariable Long id) {
         restaurantService.close(id);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/inactivate")
-    public ResponseEntity<Void> inactivate(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inactivate(@PathVariable Long id) {
         restaurantService.inactivate(id);
-        return ResponseEntity.noContent().build();
     }
 }

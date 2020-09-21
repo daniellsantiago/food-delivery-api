@@ -30,13 +30,13 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 400, message = "Invalid Restaurant ID", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<RestaurantDTO> findById(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    RestaurantDTO findById(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                            Long id);
     @ApiOperation("Save a new Restaurant to database")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Restaurant created"),
     })
-    ResponseEntity<RestaurantDTO> save(@ApiParam(name = "body", value = "Represents a new Restaurant", required = true)
+    RestaurantDTO save(@ApiParam(name = "body", value = "Represents a new Restaurant", required = true)
                                        RestaurantInput restaurantInput);
 
     @ApiOperation("Update Restaurant information given an id")
@@ -44,7 +44,7 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 200, message = "Restaurant updated"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<RestaurantDTO> update(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    RestaurantDTO update(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                          Long id,
                                          @ApiParam(name = "body", value = "Represents a new Restaurant", required = true)
                                          RestaurantInput restaurantInput);
@@ -55,7 +55,7 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 204, message = "Activated Restaurant"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> activate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void activate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                   Long id);
 
     @ApiOperation("Inactivates a restaurant by ID")
@@ -64,7 +64,7 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 204, message = "Inactivated Restaurant"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> inactivate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void inactivate(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                     Long id);
 
     @ApiOperation("Open a restaurant by ID")
@@ -73,7 +73,7 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 204, message = "Restaurant has been opened"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> open(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void open(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                               Long id);
 
     @ApiOperation("Close a restaurant by ID")
@@ -82,6 +82,6 @@ public interface RestaurantControllerOpenApi {
             @ApiResponse(code = 204, message = "Restaurant has been closed"),
             @ApiResponse(code = 404, message = "Restaurant not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> close(@ApiParam(value = "Restaurant ID", example = "1", required = true)
+    void close(@ApiParam(value = "Restaurant ID", example = "1", required = true)
                                Long id);
 }
