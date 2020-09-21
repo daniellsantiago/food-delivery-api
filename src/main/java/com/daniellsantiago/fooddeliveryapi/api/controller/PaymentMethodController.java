@@ -84,29 +84,28 @@ public class PaymentMethodController implements PaymentMethodControllerOpenApi {
     }
 
     @PostMapping
-    public ResponseEntity<PaymentMethodDTO> save(@RequestBody @Valid PaymentMethodInput paymentMethodInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public PaymentMethodDTO save(@RequestBody @Valid PaymentMethodInput paymentMethodInput) {
         PaymentMethod paymentMethod = disassembler.toDomainObject(paymentMethodInput);
 
         paymentMethod = paymentService.save(paymentMethod);
 
-        return new ResponseEntity<>(DTOAssembler.toDTO(paymentMethod), HttpStatus.CREATED);
+        return DTOAssembler.toDTO(paymentMethod);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentMethodDTO> update(@RequestBody @Valid PaymentMethodInput paymentMethodInput,
+    public PaymentMethodDTO update(@RequestBody @Valid PaymentMethodInput paymentMethodInput,
                                                    @PathVariable Long id){
         PaymentMethod paymentToBeUpdated = paymentService.findById(id);
 
         disassembler.copyToDomainObject(paymentMethodInput, paymentToBeUpdated);
 
-        PaymentMethodDTO updatedPayment = DTOAssembler.toDTO(paymentService.save(paymentToBeUpdated));
-
-        return ResponseEntity.ok(updatedPayment);
+        return DTOAssembler.toDTO(paymentService.save(paymentToBeUpdated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
         paymentService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

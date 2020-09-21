@@ -30,7 +30,7 @@ public interface PaymentMethodControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Payment Method created"),
     })
-    ResponseEntity<PaymentMethodDTO> save(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
+    PaymentMethodDTO save(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
                                           PaymentMethodInput paymentMethodInput);
 
     @ApiOperation("Update Payment Method information given an id")
@@ -38,7 +38,7 @@ public interface PaymentMethodControllerOpenApi {
             @ApiResponse(code = 200, message = "Payment Method updated"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<PaymentMethodDTO> update(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
+    PaymentMethodDTO update(@ApiParam(name = "body", value = "Represents a new Payment Method", required = true)
                                             PaymentMethodInput paymentMethodInput,
                                             @ApiParam(value = "Payment Method ID", example = "1", required = true)
                                             Long id);
@@ -49,6 +49,6 @@ public interface PaymentMethodControllerOpenApi {
             @ApiResponse(code = 204, message = "Payment Method deleted"),
             @ApiResponse(code = 404, message = "Payment Method not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> delete(@ApiParam(value = "Payment Method ID", example = "1", required = true)
+    void delete(@ApiParam(value = "Payment Method ID", example = "1", required = true)
                                 Long id);
 }
