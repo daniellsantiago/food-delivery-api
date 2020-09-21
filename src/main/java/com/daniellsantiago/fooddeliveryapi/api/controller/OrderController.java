@@ -35,10 +35,10 @@ public class OrderController implements OrderControllerOpenApi {
     private final OrderInputDisassembler orderInputDisassembler;
 
     @GetMapping
-    public PagedModel<OrderBasicDTO> findAll(OrderFilter filter,
+    public Page<OrderBasicDTO> findAll(OrderFilter filter,
                                                @PageableDefault(size = 10)Pageable pageable) {
         Page<Order> orderPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
-        return pagedResourcesAssembler.toModel(orderPage, orderBasicDTOAssembler);
+        return orderBasicDTOAssembler.toCollectionDTO(orderPage);
     }
 
     @GetMapping("/{code}")

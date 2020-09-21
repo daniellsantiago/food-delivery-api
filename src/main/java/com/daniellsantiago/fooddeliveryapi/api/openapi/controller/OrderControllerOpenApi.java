@@ -13,8 +13,8 @@ import org.springframework.data.domain.Pageable;
 public interface OrderControllerOpenApi {
 
     @ApiOperation("Find all Orders")
-    PagedModel<OrderBasicDTO> findAll(OrderFilter filter,
-                                      Pageable pageable);
+    Page<OrderBasicDTO> findAll(OrderFilter filter,
+                                Pageable pageable);
 
     @ApiOperation("Find one Order by code")
     @ApiResponses({

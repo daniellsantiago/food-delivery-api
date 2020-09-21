@@ -11,11 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,13 +27,10 @@ public class CuisineController implements CuisineControllerOpenApi {
 
     private final CuisineInputDisassembler cuisineInputDisassembler;
 
-    private final PagedResourcesAssembler<Cuisine> pagedResourcesAssembler;
-
     @GetMapping
-    public PagedModel<CuisineDTO> findAll(@PageableDefault(size = 10) Pageable pageable) {
+    public Page<CuisineDTO> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<Cuisine> cuisinePage = cuisineService.findAll(pageable);
-
-        return pagedResourcesAssembler.toModel(cuisinePage, cuisineDTOAssembler);
+        return cuisineDTOAssembler.toCollectionDTO(cuisinePage);
     }
 
     @GetMapping("/{id}")
