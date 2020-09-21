@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/role/{roleId}/permission", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/roles/{roleId}/permission", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RolePermissionController implements RolePermissionControllerOpenApi {
 

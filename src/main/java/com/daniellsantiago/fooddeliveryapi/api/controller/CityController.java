@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/city", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/v1/cities", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class CityController implements CityControllerOpenApi {
     private final CityService cityService;

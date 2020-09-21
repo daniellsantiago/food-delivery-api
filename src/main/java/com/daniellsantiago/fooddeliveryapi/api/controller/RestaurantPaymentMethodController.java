@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/restaurant/{restaurantId}/payment-method", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/restaurants/{restaurantId}/payment-method", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RestaurantPaymentMethodController implements RestaurantPaymentMethodControllerOpenApi {
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/statistic")
+@RequestMapping("/api/v1/statistics")
 public class StatisticsController implements StatisticsControllerOpenApi {
 
     @Autowired

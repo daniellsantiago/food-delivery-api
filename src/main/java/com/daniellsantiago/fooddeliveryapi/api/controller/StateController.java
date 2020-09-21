@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/state", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/states", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class StateController implements StateControllerOpenApi {
 

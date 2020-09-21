@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/restaurant/{restaurantId}/product/{productId}/photo", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/restaurants/{restaurantId}/product/{productId}/photo", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RestaurantProductPhotoController implements RestaurantProductPhotoControllerOpenApi {
 
