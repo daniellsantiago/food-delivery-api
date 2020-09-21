@@ -24,7 +24,7 @@ public interface UserRoleControllerOpenApi {
             @ApiResponse(code = 204, message = "Association succeed", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Role or User not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> associate(@ApiParam(value = "User ID", example = "1", required = true)
+    void associate(@ApiParam(value = "User ID", example = "1", required = true)
                                    Long userId,
                                    @ApiParam(value = "Role ID", example = "1", required = true)
                                    Long roleId);
@@ -34,7 +34,7 @@ public interface UserRoleControllerOpenApi {
             @ApiResponse(code = 204, message = "Disassociate succeed", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Role or User not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> disassociate(@ApiParam(value = "User ID", example = "1", required = true)
+    void disassociate(@ApiParam(value = "User ID", example = "1", required = true)
                                            Long userId,
                                    @ApiParam(value = "Role ID", example = "1", required = true)
                                            Long roleId);

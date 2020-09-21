@@ -6,6 +6,7 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.UserRoleContro
 import com.daniellsantiago.fooddeliveryapi.domain.model.User;
 import com.daniellsantiago.fooddeliveryapi.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +31,14 @@ public class UserRoleController implements UserRoleControllerOpenApi {
     }
 
     @PutMapping("/{roleId}")
-    public ResponseEntity<Void> associate(@PathVariable Long userId, @PathVariable Long roleId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associate(@PathVariable Long userId, @PathVariable Long roleId) {
         userService.associateRole(userId, roleId);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{roleId}")
-    public ResponseEntity<Void> disassociate(@PathVariable Long userId, @PathVariable Long roleId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disassociate(@PathVariable Long userId, @PathVariable Long roleId) {
         userService.disassociateRole(userId, roleId);
-        return ResponseEntity.noContent().build();
     }
 }
