@@ -23,7 +23,7 @@ public interface RolePermissionControllerOpenApi {
             @ApiResponse(code = 204, message = "Association succeed", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Role or Permission not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> associate(@ApiParam(value = "Role ID", example = "1", required = true)
+    void associate(@ApiParam(value = "Role ID", example = "1", required = true)
                                    Long roleId,
                                    @ApiParam(value = "Permission ID", example = "1", required = true)
                                    Long permissionId);
@@ -33,7 +33,7 @@ public interface RolePermissionControllerOpenApi {
             @ApiResponse(code = 204, message = "Disassociation succeed", response = ExceptionDetails.class),
             @ApiResponse(code = 404, message = "Role or Permission not found", response = ExceptionDetails.class)
     })
-    ResponseEntity<Void> disassociate(@ApiParam(value = "Role ID", example = "1", required = true)
+    void disassociate(@ApiParam(value = "Role ID", example = "1", required = true)
                                            Long roleId,
                                    @ApiParam(value = "Permission ID", example = "1", required = true)
                                            Long permissionId);

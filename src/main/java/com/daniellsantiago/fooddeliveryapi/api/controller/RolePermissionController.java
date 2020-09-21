@@ -6,6 +6,7 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RolePermission
 import com.daniellsantiago.fooddeliveryapi.domain.model.Role;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +35,14 @@ public class RolePermissionController implements RolePermissionControllerOpenApi
     }
 
     @PutMapping("/{permissionId}")
-    public ResponseEntity<Void> associate(@PathVariable Long roleId, @PathVariable Long permissionId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associate(@PathVariable Long roleId, @PathVariable Long permissionId) {
         roleService.associatePermission(roleId, permissionId);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{permissionId}")
-    public ResponseEntity<Void> disassociate(@PathVariable Long roleId, @PathVariable Long permissionId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disassociate(@PathVariable Long roleId, @PathVariable Long permissionId) {
         roleService.disassociatePermission(roleId, permissionId);
-        return ResponseEntity.noContent().build();
     }
 }
