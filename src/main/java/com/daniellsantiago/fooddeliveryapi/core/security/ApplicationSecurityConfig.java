@@ -1,6 +1,7 @@
 package com.daniellsantiago.fooddeliveryapi.core.security;
 
 import com.daniellsantiago.fooddeliveryapi.core.security.auth.AuthUserService;
+import com.daniellsantiago.fooddeliveryapi.core.security.auth.CustomAuthenticationFailureHandler;
 import com.daniellsantiago.fooddeliveryapi.core.security.jwt.JwtConfig;
 import com.daniellsantiago.fooddeliveryapi.core.security.jwt.JwtTokenVerifier;
 import com.daniellsantiago.fooddeliveryapi.core.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
@@ -36,15 +37,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationFailureHandler(),
+                        authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/**")
+                    .antMatchers("/api/v1/**")
                 .authenticated();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
