@@ -4,16 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.server.core.Relation;
 
 import java.math.BigDecimal;
 
-@Relation(collectionRelation = "orderItems")
 @Getter
 @Setter
 @ApiModel("Ordem Item Model")
-public class OrderItemDTO extends RepresentationModel<OrderItemDTO> {
+public class OrderItemDTO {
     @ApiModelProperty(example = "1")
     private Long productId;
     @ApiModelProperty(example = "Porco com molho agridoce")
