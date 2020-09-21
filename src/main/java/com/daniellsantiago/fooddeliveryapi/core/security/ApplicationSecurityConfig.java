@@ -55,4 +55,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(authUserService);
         return provider;
     }
+
+    @Bean
+    public CustomAuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
+
 }
