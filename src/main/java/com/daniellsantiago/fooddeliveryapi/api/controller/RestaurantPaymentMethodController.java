@@ -6,6 +6,7 @@ import com.daniellsantiago.fooddeliveryapi.api.openapi.controller.RestaurantPaym
 import com.daniellsantiago.fooddeliveryapi.domain.model.Restaurant;
 import com.daniellsantiago.fooddeliveryapi.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +35,14 @@ public class RestaurantPaymentMethodController implements RestaurantPaymentMetho
     }
 
     @DeleteMapping("/{paymentId}")
-    public ResponseEntity<Void> disassociate(@PathVariable Long restaurantId, @PathVariable Long paymentId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disassociate(@PathVariable Long restaurantId, @PathVariable Long paymentId) {
         restaurantService.disassociatePaymentMethod(restaurantId, paymentId);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{paymentId}")
-    public ResponseEntity<Void> associate(@PathVariable Long restaurantId, @PathVariable Long paymentId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associate(@PathVariable Long restaurantId, @PathVariable Long paymentId) {
         restaurantService.associatePaymentMethod(restaurantId, paymentId);
-        return ResponseEntity.noContent().build();
     }
 }
