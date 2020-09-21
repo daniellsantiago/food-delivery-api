@@ -40,32 +40,30 @@ public class CuisineController implements CuisineControllerOpenApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CuisineDTO> findById(@PathVariable Long id) {
-        Cuisine cuisine = cuisineService.findById(id);
-        return ResponseEntity.ok(cuisineDTOAssembler.toModel(cuisine));
+    public CuisineDTO findById(@PathVariable Long id) {
+        return cuisineDTOAssembler.toDTO(cuisineService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CuisineDTO> save(@RequestBody @Valid CuisineInput cuisineInput) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CuisineDTO save(@RequestBody @Valid CuisineInput cuisineInput) {
         Cuisine cuisineToBeSaved = cuisineInputDisassembler.toDomainObject(cuisineInput);
-        cuisineToBeSaved = cuisineService.save(cuisineToBeSaved);
-        return new ResponseEntity<>(cuisineDTOAssembler.toModel(cuisineToBeSaved), HttpStatus.CREATED);
+        return cuisineDTOAssembler.toDTO(cuisineService.save(cuisineToBeSaved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CuisineDTO> update(@RequestBody @Valid CuisineInput cuisineInput, @PathVariable Long id) {
+    public CuisineDTO update(@RequestBody @Valid CuisineInput cuisineInput, @PathVariable Long id) {
         Cuisine cuisineToBeUpdated = cuisineService.findById(id);
         cuisineInputDisassembler.copyToDomainObject(cuisineInput, cuisineToBeUpdated);
 
         Cuisine updatedCuisine = cuisineService.save(cuisineToBeUpdated);
 
-        return ResponseEntity.ok(cuisineDTOAssembler.toModel(updatedCuisine));
+        return cuisineDTOAssembler.toDTO(updatedCuisine);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
         cuisineService.delete(id);
-
-        return ResponseEntity.noContent().build();
     }
  }
