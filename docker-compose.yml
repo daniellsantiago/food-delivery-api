@@ -16,12 +16,9 @@ services:
       - db
   db:
     image: mysql
-    container_name: db_food_delivery
+    container_name: food-delivery-db
     environment:
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=db_food_delivery
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
